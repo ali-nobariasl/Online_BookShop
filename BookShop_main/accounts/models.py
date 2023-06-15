@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser , BaseUserManager
 
 
-class USerManager(BaseUserManager): # No fields  # just methods 
+class UserManager(BaseUserManager): # No fields  # just methods 
     
     def create_user(self,username, first_name, last_name, email,password=None):
         
@@ -16,26 +16,28 @@ class USerManager(BaseUserManager): # No fields  # just methods
             email=self.normalize_email(email),
             username = username,
             first_name = first_name,
-            last_name = last_name)
+            last_name = last_name,
+            )
         
         user.set_password(password)
         user.save(using=self._db)
         return user
         
     
-    def craetesuperuser(self,username, first_name, last_name, email,password=None):
+    def create_superuser(self,username, first_name, last_name, email,password=None):
         
-        user = self.craete_user(
+        user = self.create_user(
             username=username,
             first_name= first_name,
             last_name= last_name,
             email=self.normalize_email(email),
-            password=password)
+            password=password,
+            )
         
         user.is_admin = True
-        user.is_superuser = True
+        user.is_superadmin = True
         user.is_active = True
-        user.is_stuff = True
+        user.is_staff = True
         user.save(using=self._db)
         
         return user
@@ -66,13 +68,13 @@ class User(AbstractBaseUser):
     
     is_admin = models.BooleanField(default=False)
     is_active  = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
+    is_superadmin = models.BooleanField(default=False)
     is_staff  = models.BooleanField(default=False)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS =['username','first_name','last_name']
     
-    objects = USerManager()  # this tells which class should be used for making user
+    objects = UserManager()  # this tells which class should be used for making user
     
     def __str__(self):
         return self.username
@@ -80,7 +82,7 @@ class User(AbstractBaseUser):
     def has_perm(self, perm, obj=None):
         return self.is_admin
     
-    def has_modele_perms(self, app_label):
+    def has_module_perms(self, app_label):
         return True
     
     
