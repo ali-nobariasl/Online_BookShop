@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser , BaseUserManager
 
 
+
 class UserManager(BaseUserManager): # No fields  # just methods 
     
     def create_user(self,username, first_name, last_name, email,password=None):
@@ -109,3 +110,7 @@ class UserProfile(models.Model):
     
     def __str__(self):
         return self.user.email
+    
+    
+    
+    
