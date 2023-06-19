@@ -12,25 +12,31 @@ def registerUser(request):
             
             #### create a new user by using form
             # user = form.save(commit=False)
+            # password = form.cleaned_data['password']
+            # user.set_password(password)
             # user.role = User.CUSTOMER
             # user.save()
             
             #### create a new user by using model
-            first_name = form.cleaned_data['first_name'],
-            last_name = form.cleaned_data['last_name'],
-            username = form.cleaned_data['username'],
-            email = form.cleaned_data['email'],
-            password = form.cleaned_data['password'],
-            user = User.objects.create(username=username, password=password, first_name=first_name, last_name=last_name)
-            user.role = User.role
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = User.objects.create(username=username,email=email, password=password, first_name=first_name, last_name=last_name)
+            user.role = User.CUSTOMER
             user.save()
             return redirect('registerUser')
-    else:        
+        else:
+            print("form is not valid")
+            print(form.errors)
+    else:      
         form = UserForm()
         
         
     
     context ={
         'form': form,
+        'form_errors': form.errors
     }
     return render(request, 'accounts/register.html',context)
