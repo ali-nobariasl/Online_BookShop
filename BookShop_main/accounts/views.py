@@ -1,8 +1,13 @@
 from django.shortcuts import render
 
+from .forms import UserForm
+
 
 
 def registerUser(request):
     
-    context ={}
-    return render(request, 'accounts/register.html',context=context)
+    form = UserForm()
+    context ={
+        'form': form,
+    }
+    return render(request, 'accounts/register.html',context)
