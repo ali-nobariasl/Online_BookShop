@@ -47,10 +47,10 @@ class UserManager(BaseUserManager): # No fields  # just methods
 
 class User(AbstractBaseUser):  
     
-    BOOKSHOP = 1
+    VENDOR = 1
     CUSTOMER = 2
     ROLE_CHOICE = (
-        (BOOKSHOP,'BOOKSHOP'),
+        (VENDOR,'VENDOR'),
         (CUSTOMER,'CUSTOMER'),
     )
     first_name = models.CharField(max_length=50)
