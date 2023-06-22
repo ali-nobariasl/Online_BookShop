@@ -27,19 +27,17 @@ def registerUser(request):
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            user = User.objects.create(username=username,email=email, password=password, first_name=first_name, last_name=last_name)
+            user = User.objects.create_user(username=username,email=email, password=password, first_name=first_name, last_name=last_name)
             user.role = User.CUSTOMER
             user.save()
             messages.success(request, 'Your account was created successfully')
-            return redirect('registerUser')
+            return redirect('index')
         else:
             print("form is not valid")
             print(form.errors)
     else:      
         form = UserForm()
         
-        
-    
     context ={
         'form': form,
         'form_errors': form.errors,
@@ -48,30 +46,30 @@ def registerUser(request):
 
 
 def registerVendor(request):
-    
-    form = UserForm()
     if request.method == 'POST':
-        v_form = UserForm(request.POST)
-        form = UserForm(request.POST, request.FILES)
+        v_form = VendorForm(request.POST, request.FILES)
+        form = UserForm(request.POST)
         
-        if v_form.is_valid() and form.is_valid():
+        if v_form.is_valid() and form.is_valid:
             
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            user = User.objects.create(username=username,email=email, password=password, first_name=first_name, last_name=last_name)
+            user = User.objects.create_user(username=username,email=email, password=password, first_name=first_name, last_name=last_name)
             user.role = User.VENDOR
             user.save()
-            user_profile= UserProfile.objects.get(user= user)
             
             vendor = v_form.save(commit=False)
+            user_profile= UserProfile.objects.get(user=user)
+            
             vendor.user = user
             vendor.user_profile =  user_profile
             vendor.save()
+            
             messages.success(request,"your account has been added successfully")
-            return redirect('registerVendor')
+            return redirect('index')
         else: 
             print(form.errors)
             print("invalid form")
