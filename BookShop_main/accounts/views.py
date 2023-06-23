@@ -80,3 +80,16 @@ def registerVendor(request):
     context = {'v_form': v_form,
                'form':form,}
     return render(request, 'accounts/registerVendor.html',context)
+
+def logout(request):
+    context= {}
+    return render(request, 'accounts/dashboard.html',context=context)
+
+def login(request):
+    context= {}
+    return render(request, 'accounts/login.html',context=context)
+
+def dashboard(request):
+    
+    context= {}
+    return render(request, 'accounts/dashboard.html',context=context)
