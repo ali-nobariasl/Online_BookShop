@@ -10,6 +10,14 @@ from vendor.forms import VendorForm
 from vendor.models import Vendor
 
 
+# restrict the vendor from accessing the customer page 
+def check_role_vendor(user):
+    if user.role == 1:
+        return True
+    else:
+        raise PermissionError
+
+
 def registerUser(request):
     if request.user.is_authenticated:
         messages.warning(request,"you are already logged in.")
