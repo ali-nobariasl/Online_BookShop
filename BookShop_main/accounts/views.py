@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from  django.contrib import messages, auth
+from django.contrib.auth.decorators import login_required
 
 from .forms import UserForm
 from .models import User , UserProfile
@@ -120,7 +121,7 @@ def login(request):
 
 
 
-
+@login_required(login_url='login')
 def myAccount(request):
     
     user = request.user
@@ -128,11 +129,12 @@ def myAccount(request):
     return redirect( redirectUrl)
 
 
-
+@login_required(login_url='login')
 def custDashboard(request):
     return render(request, 'accounts/custDashboard.html')
 
 
+@login_required(login_url='login')
 def vendorDashboard(request):
     return render(request, 'accounts/vendorDashboard.html')
 
