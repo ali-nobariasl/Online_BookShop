@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from  django.contrib import messages
+from  django.contrib import messages, auth
 
 from .forms import UserForm
 from .models import User , UserProfile
@@ -81,11 +81,29 @@ def registerVendor(request):
                'form':form,}
     return render(request, 'accounts/registerVendor.html',context)
 
+
 def logout(request):
     context= {}
     return render(request, 'accounts/dashboard.html',context=context)
 
+
 def login(request):
+    
+    if request.method =='POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        
+        user = auth.authenticate(email=email, password=password)
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request,'you are logged in successfully')
+            return redirect('dashboard')   
+        else:
+            messages.error(request,'Invalid username or password')
+            return redirect('login')
+    else:
+        pass
+    
     context= {}
     return render(request, 'accounts/login.html',context=context)
 
