@@ -9,8 +9,10 @@ from vendor.models import Vendor
 
 
 def registerUser(request):
-    
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        messages.warning(request,"you are already logged in.")
+        return redirect('dashboard')
+    elif request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
             
@@ -46,7 +48,11 @@ def registerUser(request):
 
 
 def registerVendor(request):
-    if request.method == 'POST':
+    
+    if request.user.is_authenticated:
+        messages.warning(request,"you are already logged in.")
+        return redirect('dashboard')
+    elif request.method == 'POST':
         v_form = VendorForm(request.POST, request.FILES)
         form = UserForm(request.POST)
         
@@ -91,7 +97,11 @@ def logout(request):
 
 def login(request):
     
-    if request.method =='POST':
+    if request.user.is_authenticated:
+        messages.warning(request,"you are already logged in.")
+        return redirect('dashboard')
+    
+    elif request.method =='POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
         
@@ -103,8 +113,6 @@ def login(request):
         else:
             messages.error(request,'Invalid username or password')
             return redirect('login')
-    else:
-        pass
     
     context= {}
     return render(request, 'accounts/login.html',context=context)
