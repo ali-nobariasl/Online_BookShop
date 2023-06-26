@@ -83,8 +83,9 @@ def registerVendor(request):
 
 
 def logout(request):
-    context= {}
-    return render(request, 'accounts/dashboard.html',context=context)
+    
+    auth.logout(request)
+    return redirect('login')
 
 
 def login(request):
@@ -106,6 +107,7 @@ def login(request):
     
     context= {}
     return render(request, 'accounts/login.html',context=context)
+
 
 def dashboard(request):
     
