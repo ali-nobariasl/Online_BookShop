@@ -3,6 +3,7 @@ from  django.contrib import messages, auth
 
 from .forms import UserForm
 from .models import User , UserProfile
+from .utils import detectUrl
 
 from vendor.forms import VendorForm
 from vendor.models import Vendor
@@ -99,7 +100,7 @@ def login(request):
     
     if request.user.is_authenticated:
         messages.warning(request,"you are already logged in.")
-        return redirect('dashboard')
+        return redirect('myAccount')
     
     elif request.method =='POST':
         email = request.POST.get('email')
@@ -109,7 +110,7 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             messages.success(request,'you are logged in successfully')
-            return redirect('dashboard')   
+            return redirect('myAccount')   
         else:
             messages.error(request,'Invalid username or password')
             return redirect('login')
@@ -118,7 +119,22 @@ def login(request):
     return render(request, 'accounts/login.html',context=context)
 
 
-def dashboard(request):
+
+
+def myAccount(request):
     
-    context= {}
-    return render(request, 'accounts/dashboard.html',context=context)
+    user = request.user
+    redirectUrl = detectUrl(user)
+    return redirect( redirectUrl)
+
+
+
+def custDashboard(request):
+    return render(request, 'accounts/custDashboard.html')
+
+
+def vendorDashboard(request):
+    return render(request, 'accounts/vendorDashboard.html')
+
+
+

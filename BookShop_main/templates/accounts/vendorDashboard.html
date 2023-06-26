@@ -4,5 +4,9 @@
 
  
 <h4>Welcome</h4> {{user.username}}
+<br>
 
+This is a {{ user.get_role}}
+
+{% include 'alert.html' %}
 {% endblock %}
