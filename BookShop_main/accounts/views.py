@@ -85,6 +85,7 @@ def registerVendor(request):
 def logout(request):
     
     auth.logout(request)
+    messages.info(request,"you are logged out")
     return redirect('login')
 
 
