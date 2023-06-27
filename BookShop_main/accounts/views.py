@@ -5,7 +5,7 @@ from django.core.exceptions import PermissionDenied
 
 from .forms import UserForm
 from .models import User , UserProfile
-from .utils import detectUrl
+from .utils import detectUrl , send_verification_email
 
 from vendor.forms import VendorForm
 from vendor.models import Vendor
@@ -51,6 +51,10 @@ def registerUser(request):
             user = User.objects.create_user(username=username,email=email, password=password, first_name=first_name, last_name=last_name)
             user.role = User.CUSTOMER
             user.save()
+            
+            #send verification email
+            send_verification_email(request, user)
+            
             messages.success(request, 'Your account was created successfully')
             return redirect('index')
         else:
