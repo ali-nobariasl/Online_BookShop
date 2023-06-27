@@ -7,7 +7,7 @@ from django.contrib.auth.tokens import default_token_generator
 
 from .forms import UserForm
 from .models import User , UserProfile
-from .utils import detectUrl , send_verification_email
+from .utils import detectUrl , send_verification_email ,send_password_reset_email
 
 from vendor.forms import VendorForm
 from vendor.models import Vendor
@@ -188,17 +188,31 @@ def activate(request,uid64,token):
 
 def forgotPassword(request):
     
-    #  find out if the user has signed up before or not
-    #  send mail
-    # make new password
-    email = request.POST.get('email')
-    user = User.objects.get(email=email)
-    if user is not None:
-        # do 
-        pass
-    else:
-        messages.error(request,'your email is not signed up')
-        return redirect('forgotPassword')
-    print(email)
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        
+        if  User.objects.filter(email=email).exists():
+            user = User.objects.get(email__exact=email)
+            
+            #send reset password link via email
+            send_password_reset_email(request, user)
+            
+            messages.success(request,'password reset link has been sent to your mail.')
+            return redirect('login')
+        else:
+            messages.error(request,'Account does not exist')
+            return redirect('forgotPassword')
+        
+
+    
     
     return render(request,'accounts/emails/forgotPassword.html')
+
+
+
+
+def resetPassword(requset):
+    pass
+
+def resetPasswordValidate(requset):
+    pass
