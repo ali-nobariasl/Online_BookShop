@@ -184,4 +184,21 @@ def activate(request,uid64,token):
     else:
         messages.error(request,'the verification link is not correct')
         return redirect('myAccount')
+
+
+def forgotPassword(request):
     
+    #  find out if the user has signed up before or not
+    #  send mail
+    # make new password
+    email = request.POST.get('email')
+    user = User.objects.get(email=email)
+    if user is not None:
+        # do 
+        pass
+    else:
+        messages.error(request,'your email is not signed up')
+        return redirect('forgotPassword')
+    print(email)
+    
+    return render(request,'accounts/emails/forgotPassword.html')
