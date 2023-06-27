@@ -213,14 +213,21 @@ def forgotPassword(request):
 
 
 
-def resetPassword(requset, uid64,token):
+def resetPasswordValidate(request, uid64,token):
     
-    uid = urlsafe_base64_decode(uid64).decode()
-    if User.objects.filter(pk=uid).exists:
-        user = User.objects.get(pk=uid)
-        
+    try:
+        uid = urlsafe_base64_decode(uid64).decode()
+        user = User._default_manager.get(pk=uid)
+    except(ValueError, TypeError, OverflowError, User.DoesNotExist):
+        user = None
     
-    return redirect('resetPasswordValidation')
+    if user is not None and default_token_generator.check_token(user, token):
+       request.session['uid'] = uid
+       messages.success(request,'Please reset your password')
+       return redirect('resetPassword')
+    else:
+       messages.error(request,'This link has been expired. Please try again')
+       return redirect('myAccount')
 
-def resetPasswordValidate(requset):
+def resetPassword(request):
     pass
