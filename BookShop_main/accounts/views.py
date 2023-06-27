@@ -229,5 +229,23 @@ def resetPasswordValidate(request, uid64,token):
        messages.error(request,'This link has been expired. Please try again')
        return redirect('myAccount')
 
+
+
 def resetPassword(request):
-    pass
+    
+    if request.method == 'POST':
+        confirm_password = request.POST.get('confirm_password')
+        password = request.POST.get('password')
+        uid = request.session.get(uid)
+        if confirm_password == password:
+            user = User._default_manager.get(pk=uid)
+            user.set_password(password)
+            user.is_active = True
+            user.save()
+            messages.success(request,'Password reset successfully')
+            return redirect('login')
+        else:
+            messages.error(request,'Passwords not match. Please try again')
+            return redirect('resetPassword')
+        
+    return render(request, 'accounts/emails/resetPassword.html')
