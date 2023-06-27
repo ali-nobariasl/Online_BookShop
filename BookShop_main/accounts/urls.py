@@ -17,5 +17,6 @@ urlpatterns = [
     
     path('myAccount/', views.myAccount, name='myAccount'),
     
+    path('activate/<uid>/<token>/', views.activate, name='activate'),
     
 ]

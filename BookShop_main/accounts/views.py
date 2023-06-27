@@ -89,13 +89,16 @@ def registerVendor(request):
             user = User.objects.create_user(username=username,email=email, password=password, first_name=first_name, last_name=last_name)
             user.role = User.VENDOR
             user.save()
-            
+
             vendor = v_form.save(commit=False)
             user_profile= UserProfile.objects.get(user=user)
             
             vendor.user = user
             vendor.user_profile =  user_profile
             vendor.save()
+                        
+            #send verification email
+            send_verification_email(request, user)
             
             messages.success(request,"your account has been added successfully")
             return redirect('index')
@@ -163,3 +166,7 @@ def vendorDashboard(request):
 
 
 
+def activate(request,uid64,token):
+    # activate the user 
+    
+    return 
