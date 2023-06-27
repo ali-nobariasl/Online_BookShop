@@ -7,7 +7,7 @@ from django.contrib.auth.tokens import default_token_generator
 
 from .forms import UserForm
 from .models import User , UserProfile
-from .utils import detectUrl , send_verification_email ,send_password_reset_email
+from .utils import detectUrl , send_verification_email
 
 from vendor.forms import VendorForm
 from vendor.models import Vendor
@@ -55,7 +55,9 @@ def registerUser(request):
             user.save()
             
             #send verification email
-            send_verification_email(request, user)
+            mail_subject ='Please Activate your account'
+            mail_template = 'account/emails/account_verification_email.html'
+            send_verification_email(request, user, mail_subject, mail_template)
             
             messages.success(request, 'Your account was created successfully')
             return redirect('index')
@@ -100,7 +102,9 @@ def registerVendor(request):
             vendor.save()
                         
             #send verification email
-            send_verification_email(request, user)
+            mail_subject ='Please Activate your account'
+            mail_template = 'account/emails/account_verification_email.html'
+            send_verification_email(request, user, mail_subject, mail_template)
             
             messages.success(request,"your account has been added successfully")
             return redirect('index')
@@ -195,7 +199,9 @@ def forgotPassword(request):
             user = User.objects.get(email__exact=email)
             
             #send reset password link via email
-            send_password_reset_email(request, user)
+            mail_subject ='Reset Your Password'
+            mail_template = 'account/emails/reset_password_email.html'
+            send_verification_email(request, user, mail_subject, mail_template)
             
             messages.success(request,'password reset link has been sent to your mail.')
             return redirect('login')
@@ -203,16 +209,18 @@ def forgotPassword(request):
             messages.error(request,'Account does not exist')
             return redirect('forgotPassword')
         
-
-    
-    
     return render(request,'accounts/emails/forgotPassword.html')
 
 
 
-
-def resetPassword(requset):
-    pass
+def resetPassword(requset, uid64,token):
+    
+    uid = urlsafe_base64_decode(uid64).decode()
+    if User.objects.filter(pk=uid).exists:
+        user = User.objects.get(pk=uid)
+        
+    
+    return redirect('resetPasswordValidation')
 
 def resetPasswordValidate(requset):
     pass
