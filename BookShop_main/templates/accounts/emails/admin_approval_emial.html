@@ -1,0 +1,13 @@
+{% autoescape off %}
+
+
+Hi {{ user.fist_name}}, 
+{% if is_approved %}
+    Congratulations! your shop is approved
+{% else %}
+    We are sorry, your shop is not approved
+{% endif %}
+
+
+
+{% endautoescape %}
