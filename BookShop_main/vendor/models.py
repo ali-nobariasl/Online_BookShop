@@ -2,7 +2,7 @@ from django.db import models
 
 
 from accounts.models import User , UserProfile
-
+from accounts.utils import send_notification
 
 
 class Vendor(models.Model):
@@ -22,16 +22,19 @@ class Vendor(models.Model):
     def save(self, *args, **kwargs):
         if self.pk is not None:
             origin = Vendor.objects.get(pk=self.pk)
+            
             if origin.is_approved != self.is_approved:
+                mail_template = 'accounts/emails/admin_approval_emial.html'
+                context = {
+                        'user': self.user,
+                        'is_approved': self.is_approved,
+                    }
+                
                 if self.is_approved == True:
                     mail_subject = 'Congratulations! your shop is approved'
-                    mail_template = 'accounts/emails/admin_approval_emial.html'
-                    context = ''
                     send_notification(mail_subject,mail_template, context)
                 else:
-                    mail_subject = ''
-                    mail_template = 'accounts/emails/admin_.html'
-                    context = ''
+                    mail_subject = 'We are sorry, your shop is not approved'
                     send_notification(mail_subject,mail_template, context)
         
         
