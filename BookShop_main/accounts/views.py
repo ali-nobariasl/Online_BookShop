@@ -32,7 +32,7 @@ def check_role_customer(user):
 def registerUser(request):
     if request.user.is_authenticated:
         messages.warning(request,"you are already logged in.")
-        return redirect('dashboard')
+        return redirect('myAccount')
     elif request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
@@ -56,7 +56,7 @@ def registerUser(request):
             
             #send verification email
             mail_subject ='Please Activate your account'
-            mail_template = 'account/emails/account_verification_email.html'
+            mail_template = 'accounts/emails/account_verification_email.html'
             send_verification_email(request, user, mail_subject, mail_template)
             
             messages.success(request, 'Your account was created successfully')
@@ -103,7 +103,7 @@ def registerVendor(request):
                         
             #send verification email
             mail_subject ='Please Activate your account'
-            mail_template = 'account/emails/account_verification_email.html'
+            mail_template = 'accounts/emails/account_verification_email.html'
             send_verification_email(request, user, mail_subject, mail_template)
             
             messages.success(request,"your account has been added successfully")
@@ -200,7 +200,7 @@ def forgotPassword(request):
             
             #send reset password link via email
             mail_subject ='Reset Your Password'
-            mail_template = 'account/emails/reset_password_email.html'
+            mail_template = 'accounts/emails/password_reset_email.html'
             send_verification_email(request, user, mail_subject, mail_template)
             
             messages.success(request,'password reset link has been sent to your mail.')
