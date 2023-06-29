@@ -172,10 +172,10 @@ def vendorDashboard(request):
 
 
 
-def activate(request,uid64,token):
+def activate(request,uidb64,token):
     # activate the user 
     try:
-        uid = urlsafe_base64_decode(uid64).decode()
+        uid = urlsafe_base64_decode(uidb64).decode()
         user = User._default_manager.get(pk = uid)
     except(ValueError, TypeError, OverflowError, User.DoesNotExist):
         user = None
@@ -213,10 +213,10 @@ def forgotPassword(request):
 
 
 
-def resetPasswordValidate(request, uid64,token):
+def resetPasswordValidate(request, uidb64,token):
     
     try:
-        uid = urlsafe_base64_decode(uid64).decode()
+        uid = urlsafe_base64_decode(uidb64).decode()
         user = User._default_manager.get(pk=uid)
     except(ValueError, TypeError, OverflowError, User.DoesNotExist):
         user = None
@@ -236,9 +236,9 @@ def resetPassword(request):
     if request.method == 'POST':
         confirm_password = request.POST.get('confirm_password')
         password = request.POST.get('password')
-        uid = request.session.get(uid)
+        pk = request.session.get('uid')
         if confirm_password == password:
-            user = User._default_manager.get(pk=uid)
+            user = User._default_manager.get(pk=pk)
             user.set_password(password)
             user.is_active = True
             user.save()

@@ -17,11 +17,11 @@ urlpatterns = [
     
     path('myAccount/', views.myAccount, name='myAccount'),
     
-    path('activate/<uid>/<token>/', views.activate, name='activate'),
+    path('activate/<uidb64>/<token>/', views.activate, name='activate'),
     
     
     path('forgotPassword/', views.forgotPassword, name='forgotPassword'),
-    path('resetPasswordValidate/<uid>/<token>/', views.resetPasswordValidate, name='resetPasswordValidate'),
+    path('resetPasswordValidate/<uidb64>/<token>/', views.resetPasswordValidate, name='resetPasswordValidate'),
     path('resetPassword/', views.resetPassword, name='resetPassword'),
     
     
