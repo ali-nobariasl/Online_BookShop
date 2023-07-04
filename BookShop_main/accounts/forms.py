@@ -21,9 +21,12 @@ class UserForm(forms.ModelForm):
         if password != confirm_password:
             raise forms.ValidationError("passi jun is not match :)")
         
+ 
+ 
         
 class UserProfileForm(forms.ModelForm):
-    
+    profile_picture = forms.ImageField(widget=forms.FileInput(attrs={'class':'btn btn-info'}))
+    cover_photo = forms.ImageField(widget=forms.FileInput(attrs={'class':'btn btn-info'}))
     class Meta:
         model= UserProfile
         fields = ['profile_picture','cover_photo','address_line_1','address_line_2', 'country','state','city','pin_code','latitude','longitude']
