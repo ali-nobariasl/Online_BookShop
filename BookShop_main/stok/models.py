@@ -24,6 +24,7 @@ class BookItem(models.Model):
     vendor = models.ForeignKey(Vendor,on_delete=models.CASCADE)
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     book_title = models.CharField(max_length=50)
+    writer = models.CharField(max_length=150, blank=True )
     slug = models.CharField(max_length=100, unique=True)
     description= models.TextField(blank=True, max_length=250)
     price = models.DecimalField(max_digits=10, decimal_places=2)
