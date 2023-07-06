@@ -9,6 +9,7 @@ from .models import Vendor
 from accounts.models import UserProfile
 from accounts.views import check_role_vendor
 
+from stok.models import Category , BookItem
 
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
@@ -42,3 +43,14 @@ def vprofile(request):
         
     }
     return render(request, 'vendor/vprofile.html', context=context)
+
+
+
+def menu_builder(request):
+    
+    vendor = Vendor.objects.get(user= request.user)
+    categories = Category.objects.filter(vendor=vendor)
+    print(vendor)
+    
+    context = {'categories': categories}    
+    return render(request, 'vendor/menu_builder.html' , context=context)

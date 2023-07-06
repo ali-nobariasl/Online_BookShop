@@ -13,7 +13,7 @@ class BookItemAdmin(admin.ModelAdmin):
     prepopulated_fields ={'slug':('book_title',)}
     list_display =('book_title', 'category','vendor','price','is_available',  'updated_at')
     search_fields =('book_title','category__category_name', 'vendor__vendor_name','price')
-    list_filter =('is_available')
+    list_filter =('is_available',)
     
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(BookItem, BookItemAdmin)
