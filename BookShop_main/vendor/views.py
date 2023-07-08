@@ -11,6 +11,12 @@ from accounts.views import check_role_vendor
 
 from stok.models import Category , BookItem
 
+
+def get_vendor(request):
+    vendor = Vendor.objects.get(user= request.user)
+    return vendor
+
+
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 def vprofile(request):
