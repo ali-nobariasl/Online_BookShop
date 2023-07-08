@@ -34,7 +34,7 @@
                                               <tr >
                                                 <th>{{forloop.counter }} </th>
                                                 <td class="text-left">
-                                                    <a href="#">
+                                                    <a href="{% url 'bookitems_by_category' item.id %}">
                                                         <p class="mb-0 font-weight-bold">{{ item.category_name }} </p>
                                                         <small class="text-muted">{{item.description}}</small>
                                                     </a>

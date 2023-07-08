@@ -60,7 +60,11 @@ def menu_builder(request):
 def bookitems_by_category(request, pk):
     
     vendor = Vendor.objects.get(user= request.user)
-    category = Category.objects.get(vendor=vendor, pk = pk)
+    try:
+        category = Category.objects.get(vendor=vendor, pk = pk)
+    except:
+        category= None
+        
     items = BookItem.objects.filter(category= category)
     context = {'items': items}
     return render(request, 'vendor/bookitems_by_category.html',context= context)
