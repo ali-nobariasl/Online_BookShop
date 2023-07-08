@@ -50,7 +50,7 @@ def menu_builder(request):
     
     vendor = Vendor.objects.get(user= request.user)
     categories = Category.objects.filter(vendor=vendor)
-    print(vendor)
-    
+
+
     context = {'categories': categories}    
     return render(request, 'vendor/menu_builder.html' , context=context)

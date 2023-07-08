@@ -11,5 +11,6 @@ urlpatterns = [
     path('', AccountViews.vendorDashboard,name='vendor'),
     path('profile/', views.vprofile,name='vprofile'),
     path('menu-builder/', views.menu_builder, name='menu_builder'),
+    path('menu-builder/category/<int:pk>', views.bookitems_by_category, name='bookitems_by_category'),
     
 ]
