@@ -93,7 +93,7 @@ def add_category(request):
             return redirect('menu_builder')
         else:
             messages.error(request, 'Your data is not valid')
-            return redirect('menu_builder')
+            
     else:
         form = CategoryForm()
                     
