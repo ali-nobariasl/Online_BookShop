@@ -57,7 +57,7 @@ def vprofile(request):
 def menu_builder(request):
     
     vendor = get_vendor(request)
-    categories = Category.objects.filter(vendor=vendor)
+    categories = Category.objects.filter(vendor=vendor).order_by('created_at')
 
 
     context = {'categories': categories}    
@@ -103,7 +103,7 @@ def add_category(request):
 
 def edit_category(request,pk=None):
     
-    categoryinstance = Category.objects.get(pk=pk)
+    categoryinstance =  get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
         form = CategoryForm(request.POST, instance=categoryinstance)
         if form.is_valid():
@@ -123,3 +123,14 @@ def edit_category(request,pk=None):
     context ={'form':form,
               'category':categoryinstance}
     return render(request, 'vendor/edit_category.html',context=context)
+
+
+
+
+def delete_category(request, pk=None):
+    
+    category = get_object_or_404(Category, pk=pk)
+    category.delete()
+    messages.success(request, 'Category deleted successfully')
+    return redirect('menu_builder')
+    
