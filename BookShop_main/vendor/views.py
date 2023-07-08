@@ -52,9 +52,11 @@ def vprofile(request):
 
 
 
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
 def menu_builder(request):
     
-    vendor = Vendor.objects.get(user= request.user)
+    vendor = get_vendor(request)
     categories = Category.objects.filter(vendor=vendor)
 
 
@@ -62,10 +64,11 @@ def menu_builder(request):
     return render(request, 'vendor/menu_builder.html' , context=context)
 
 
-
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
 def bookitems_by_category(request, pk):
     
-    vendor = Vendor.objects.get(user= request.user)
+    vendor = get_vendor(request)
     try:
         category = Category.objects.get(vendor=vendor, pk = pk)
     except:
