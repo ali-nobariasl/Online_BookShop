@@ -99,3 +99,27 @@ def add_category(request):
                     
     context ={'form':form}
     return render(request, 'vendor/add_category.html', context=context)
+
+
+def edit_category(request,pk=None):
+    
+    categoryinstance = Category.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=categoryinstance)
+        if form.is_valid():
+            category_name = form.cleaned_data['category_name']
+            category = form.save(commit=False)
+            category.vendor = get_vendor(request)
+            category.slug = slugify(category_name)
+            category.save()
+            messages.success(request, 'Category update successfully')
+            return redirect('menu_builder')
+        else:
+            messages.error(request, 'Your data is not valid')
+            
+    else:
+        form = CategoryForm(instance=categoryinstance)
+                    
+    context ={'form':form,
+              'category':categoryinstance}
+    return render(request, 'vendor/edit_category.html',context=context)
