@@ -66,5 +66,6 @@ def bookitems_by_category(request, pk):
         category= None
         
     items = BookItem.objects.filter(category= category)
-    context = {'items': items}
+    context = {'items': items,
+               'category': category}
     return render(request, 'vendor/bookitems_by_category.html',context= context)
