@@ -54,3 +54,13 @@ def menu_builder(request):
 
     context = {'categories': categories}    
     return render(request, 'vendor/menu_builder.html' , context=context)
+
+
+
+def bookitems_by_category(request, pk):
+    
+    vendor = Vendor.objects.get(user= request.user)
+    category = Category.objects.get(vendor=vendor, pk = pk)
+    items = BookItem.objects.filter(category= category)
+    context = {'items': items}
+    return render(request, 'vendor/bookitems_by_category.html',context= context)
