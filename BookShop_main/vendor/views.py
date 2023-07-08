@@ -10,7 +10,7 @@ from accounts.models import UserProfile
 from accounts.views import check_role_vendor
 
 from stok.models import Category , BookItem
-
+from stok.forms import CategoryForm
 
 def get_vendor(request):
     vendor = Vendor.objects.get(user= request.user)
@@ -78,3 +78,10 @@ def bookitems_by_category(request, pk):
     context = {'items': items,
                'category': category}
     return render(request, 'vendor/bookitems_by_category.html',context= context)
+
+
+def add_category(request):
+    
+    form = CategoryForm()
+    context ={'form':form}
+    return render(request, 'vendor/add_category.html', context=context)

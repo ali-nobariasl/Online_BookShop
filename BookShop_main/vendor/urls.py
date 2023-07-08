@@ -13,4 +13,7 @@ urlpatterns = [
     path('menu-builder/', views.menu_builder, name='menu_builder'),
     path('menu-builder/category/<int:pk>', views.bookitems_by_category, name='bookitems_by_category'),
     
+    ## Category CRUD
+    path('menu-builder/category/add', views.add_category, name='add_category'),
+    
 ]
