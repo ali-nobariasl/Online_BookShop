@@ -45,7 +45,7 @@
                                                 </td>
                                                 <td>
                                                     <a href="{% url 'edit_book' item.pk %}" style="color:unset;" ><i class="fa icon-pencil" aria-hidden="true"></i></a> &nbsp;
-                                                    <a href="" ><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                                    <a href="{% url 'delete_book' item.pk %}" onclick="confirm('Are you sure you want to delet this item???')" ><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
                                                 </td>
                                                 
                                               </tr>

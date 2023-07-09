@@ -198,4 +198,4 @@ def delete_book(request, pk=None):
     book.delete()
     messages.success(request,'Book deleted successfully')
     
-    return redirect('menu_builder')
+    return redirect('bookitems_by_category', book.category.id)

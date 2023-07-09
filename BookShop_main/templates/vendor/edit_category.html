@@ -52,8 +52,11 @@
                                             {% endfor %}
 
                                             <button type="submit" class="btn btn-info">
-                                                 <i class="fa fa-check" aria-hidden="true">Create</i>
+                                                 <i class="fa fa-check" aria-hidden="true">Edit</i>
                                             </button>
+                                            <a href="{% url 'delete_category' category.pk %}" onclick="confirm('Are you sure you want to delete this category???')" class="btn btn-danger">
+                                                <i class="fa fa-trash" aria-hidden="true">Delete</i>
+                                            </a>
                                         </form>
                                     </div>
 									
