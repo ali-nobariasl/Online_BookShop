@@ -10,7 +10,7 @@ class CategoryForm(forms.ModelForm):
         
         
 class BookItemForm(forms.ModelForm):
-    image = forms.FileField(widget=forms.FileInput(attrs={'class':'btn btn-info w-100'}), validators=[allow_only_images_validator])
+    image = forms.FileField(widget=forms.FileInput(attrs={'class':'btn btn-info w-100'}))
     
     class Meta:
         model =BookItem

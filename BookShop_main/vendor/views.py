@@ -80,6 +80,9 @@ def bookitems_by_category(request, pk):
     return render(request, 'vendor/bookitems_by_category.html',context= context)
 
 
+
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
 def add_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -101,6 +104,8 @@ def add_category(request):
     return render(request, 'vendor/add_category.html', context=context)
 
 
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
 def edit_category(request,pk=None):
     
     categoryinstance =  get_object_or_404(Category, pk=pk)
@@ -126,7 +131,8 @@ def edit_category(request,pk=None):
 
 
 
-
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
 def delete_category(request, pk=None):
     
     category = get_object_or_404(Category, pk=pk)
@@ -134,8 +140,11 @@ def delete_category(request, pk=None):
     messages.success(request, 'Category deleted successfully')
     return redirect('menu_builder')
     
+
+ 
     
-    
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)   
 def add_book(request):
     
     if request.method == 'POST':
@@ -154,3 +163,15 @@ def add_book(request):
         form = BookItemForm()
     context = {'form':form,}
     return render(request, 'vendor/add_book.html', context=context)
+
+
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
+def edit_book(request,pk=None):
+    
+    if request.method == 'POST':
+        pass
+    
+    
+    context ={}
+    return render(request, 'vendor/edit_book.html',context=context)
