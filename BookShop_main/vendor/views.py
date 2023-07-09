@@ -10,7 +10,7 @@ from accounts.models import UserProfile
 from accounts.views import check_role_vendor
 
 from stok.models import Category , BookItem
-from stok.forms import CategoryForm
+from stok.forms import CategoryForm , BookItemForm
 
 def get_vendor(request):
     vendor = Vendor.objects.get(user= request.user)
@@ -134,3 +134,10 @@ def delete_category(request, pk=None):
     messages.success(request, 'Category deleted successfully')
     return redirect('menu_builder')
     
+    
+    
+def add_book(request):
+    
+    form = BookItemForm()
+    context = {'form':form,}
+    return render(request, 'vendor/add_book.html', context=context)
