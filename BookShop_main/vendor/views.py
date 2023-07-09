@@ -138,6 +138,19 @@ def delete_category(request, pk=None):
     
 def add_book(request):
     
-    form = BookItemForm()
+    if request.method == 'POST':
+        form = BookItemForm(request.POST,request.FILES)
+        if form.is_valid():
+            book_name = form.cleaned_data['book_title']
+            book = form.save(commit=False)
+            book.vendor = get_vendor(request)
+            book.slug = slugify(book_name)
+            book.save()
+            messages.success(request, 'Book added successfully')
+            return redirect('bookitems_by_category', book.category.id)
+        else:
+            messages.error(request, 'invalide book information')
+    else:
+        form = BookItemForm()
     context = {'form':form,}
     return render(request, 'vendor/add_book.html', context=context)

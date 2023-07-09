@@ -28,7 +28,7 @@
                                         <br>
                                         <br>
                                         <h6>Add New Book</h6>
-                                        <form action="{% url 'add_book' %}" method="POST">
+                                        <form action="{% url 'add_book' %}" method="POST" enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <div class="form.fields.set">
                                                 <div class="row">
@@ -53,8 +53,10 @@
                                                         {{form.price}}
                                                     </div>
                                                     <div class="col-lg-6 col-md-6 col-sm-12">
-                                                        <label>Cover </label>
-                                                        {{form.image.url}}
+                                                        <div class="field-holder">
+                                                            <label>Cover </label>
+                                                            {{form.image}}
+                                                        </div>
                                                     </div>
                                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                                         <label>Is avaliable </label>

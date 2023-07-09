@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import Category, BookItem
-
+from accounts.validators import allow_only_images_validator
 
 class CategoryForm(forms.ModelForm):
     class Meta:
@@ -10,6 +10,8 @@ class CategoryForm(forms.ModelForm):
         
         
 class BookItemForm(forms.ModelForm):
+    image = forms.FileField(widget=forms.FileInput(attrs={'class':'btn btn-info w-100'}), validators=[allow_only_images_validator])
+    
     class Meta:
         model =BookItem
         fields =('category','book_title','writer','description',
