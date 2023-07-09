@@ -169,9 +169,33 @@ def add_book(request):
 @user_passes_test(check_role_vendor)
 def edit_book(request,pk=None):
     
+    bookinstance = get_object_or_404(BookItem, pk=pk)
     if request.method == 'POST':
-        pass
-    
-    
-    context ={}
+        form = BookItemForm(request.POST,request.FILES,instance=bookinstance)
+        if form.is_valid():
+            book_title = form.cleaned_data['book_title']
+            book = form.save(commit=False)
+            book.vendor = get_vendor(request)
+            book.slug = slugify(book_title)
+            book.save()
+            messages.success(request,'Book created successfully')
+            return redirect('bookitems_by_category', book.category.id)
+        else:
+            messages.error(request, 'invalide book information')
+    else:
+        form = BookItemForm(instance=bookinstance)
+        
+    context ={'form':form,
+              'book':bookinstance}
     return render(request, 'vendor/edit_book.html',context=context)
+
+
+
+
+def delete_book(request, pk=None):
+    
+    book = get_object_or_404(BookItem, pk=pk)
+    book.delete()
+    messages.success(request,'Book deleted successfully')
+    
+    return redirect('menu_builder')

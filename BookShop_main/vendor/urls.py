@@ -21,6 +21,6 @@ urlpatterns = [
     ## Book Item CRUD
     path('menu-builder/book/add', views.add_book, name='add_book'),
     path('menu-builder/book/edit/<int:pk>/', views.edit_book, name='edit_book'),
-    path('menu-builder/category/delete/<int:pk>/', views.delete_category, name='delete_category'),
+    path('menu-builder/book/delete/<int:pk>/', views.delete_book, name='delete_book'),
     
 ]
