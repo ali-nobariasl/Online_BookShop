@@ -1,3 +1,12 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+from vendor.models import Vendor
+
+
+def marketplace(request):
+    
+    
+    marketplace = Vendor.objects.filter()
+    context = {'marketplace':marketplace}
+    return render(request, 'marketplace/listing.html', context=context)
