@@ -78,7 +78,7 @@ def registerVendor(request):
     
     if request.user.is_authenticated:
         messages.warning(request,"you are already logged in.")
-        return redirect('dashboard')
+        return redirect('myAccount')
     elif request.method == 'POST':
         v_form = VendorForm(request.POST, request.FILES)
         form = UserForm(request.POST)
