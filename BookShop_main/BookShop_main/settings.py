@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'accounts',
     'vendor',
     'stok',
+    'marketplace',
 ]
 
 MIDDLEWARE = [
