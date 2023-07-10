@@ -83,7 +83,7 @@ def registerVendor(request):
         v_form = VendorForm(request.POST, request.FILES)
         form = UserForm(request.POST)
         
-        if form.is_valid() and v_form.is_valid:
+        if (form.is_valid()) and (v_form.is_valid()):
             
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']

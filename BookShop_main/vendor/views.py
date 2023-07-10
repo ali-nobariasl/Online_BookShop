@@ -161,6 +161,8 @@ def add_book(request):
             messages.error(request, 'invalide book information')
     else:
         form = BookItemForm()
+        # modifing the form 
+        form.fields['category'].queryset = Category.objects.filter(vendor= get_vendor(request))
     context = {'form':form,}
     return render(request, 'vendor/add_book.html', context=context)
 
@@ -184,7 +186,7 @@ def edit_book(request,pk=None):
             messages.error(request, 'invalide book information')
     else:
         form = BookItemForm(instance=bookinstance)
-        
+        form.fields['category'].queryset = Category.objects.filter(vendor= get_vendor(request))
     context ={'form':form,
               'book':bookinstance}
     return render(request, 'vendor/edit_book.html',context=context)
