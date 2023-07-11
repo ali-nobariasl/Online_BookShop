@@ -101,7 +101,7 @@ def registerVendor(request):
             vendor.user = user
             vendor.user_profile =  user_profile
             vendor_name = v_form.cleaned_data['vendor_name']
-            vendor.vendor_slug = slugify(vendor_name)
+            vendor.vendor_slug = slugify(vendor_name)+ '-' + str(user.id)
             vendor.save()
                         
             #send verification email
