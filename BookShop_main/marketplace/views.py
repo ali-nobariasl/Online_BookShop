@@ -2,6 +2,8 @@ from django.shortcuts import render,get_object_or_404
 
 
 from vendor.models import Vendor
+from stok.models import Category
+
 
 
 def marketplace(request):
@@ -19,5 +21,9 @@ def marketplace(request):
 def vendor_detail(request,vendor_slug):
     
     vendor = get_object_or_404(Vendor,vendor_slug=vendor_slug )
-    context = {'vendor':vendor,}
+    
+    categories = Category.objects.filter(vendor=vendor)
+    
+    context = {'vendor':vendor,
+               'categories':categories}
     return render(request, 'marketplace/vendor_detail.html', context=context)
