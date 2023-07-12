@@ -6,7 +6,7 @@ from stok.models import Category
 
 
 
-def marketplace(request):
+def marketplace  (request):
     
     vendors = Vendor.objects.filter(is_approved=True, user__is_active=True)
     vendor_count = vendors.count()
@@ -23,6 +23,7 @@ def vendor_detail(request,vendor_slug):
     vendor = get_object_or_404(Vendor,vendor_slug=vendor_slug )
     
     categories = Category.objects.filter(vendor=vendor)
+    
     
     context = {'vendor':vendor,
                'categories':categories}
