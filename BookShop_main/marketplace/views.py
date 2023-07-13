@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,HttpResponse
 from django.db.models import Prefetch
 
 from vendor.models import Vendor
@@ -31,3 +31,9 @@ def vendor_detail(request,vendor_slug):
     context = {'vendor':vendor,
                'categories':categories}
     return render(request, 'marketplace/vendor_detail.html', context=context)
+
+
+
+def add_to_cart(request,book_id):
+    
+    return HttpResponse("testing")
