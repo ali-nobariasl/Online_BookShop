@@ -54,10 +54,14 @@ def add_to_cart(request,book_id):
                     chkcat = Cart.objects.get(user= request.user, bookitem=bookitem)
                     chkcat.quantity += 1
                     chkcat.save()
-                    return JsonResponse({'status':'Success','message':'quantity increased','cart_counter':get_cart_counter(request)})
+                    return JsonResponse({'status':'Success','message':'quantity increased',
+                                         'cart_counter':get_cart_counter(request),
+                                         'qty':chkcat.quantity })
                 except:
                     chkcat = Cart.objects.create(user= request.user, bookitem=bookitem, quantity=1)
-                    return JsonResponse({'status':'Success','message':'cart created and quantity increased','cart_counter':get_cart_counter(request)})
+                    return JsonResponse({'status':'Success','message':'cart created and quantity increased',
+                                         'cart_counter':get_cart_counter(request),
+                                         'qty':chkcat.quantity })
                     
             except:
                 return JsonResponse({'status':'failed','message':'this item is not exist'})
