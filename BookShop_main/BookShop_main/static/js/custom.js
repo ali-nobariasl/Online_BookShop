@@ -2,6 +2,7 @@
 
 
 
+
 $(document).ready(function(){
     // add cart
      $('.add_to_cart').on('click', function(e){
@@ -14,9 +15,16 @@ $(document).ready(function(){
             url:url,
             success: function(response){
                 console.log(response);
-                $('#cart_counter').html(response.cart_counter['cart_count']);
-                $('#qty-'+book_id).html(response.qty);
-
+                if(response.status=='login_required'){
+                    swal(response.message,'','info').then(function(){
+                        window.location='/accounts/login/';
+                    })
+                }if(response.status=='failed'){
+                    swal(response.message,'','error')
+                }else{
+                    $('#cart_counter').html(response.cart_counter['cart_count']);
+                    $('#qty-'+book_id).html(response.qty);
+                }
             }
         })
      })
@@ -39,9 +47,16 @@ $(document).ready(function(){
             url:url,
             success: function(response){
                 console.log(response);
-                $('#cart_counter').html(response.cart_counter['cart_count']);
-                $('#qty-'+book_id).html(response.qty);
-
+                if(response.status=='login_required'){
+                    swal(response.message,'','info').then(function(){
+                        window.location='/accounts/login/';
+                    })
+                }if(response.status=='failed'){
+                    swal(response.message,'','error')
+                }else{
+                    $('#cart_counter').html(response.cart_counter['cart_count']);
+                    $('#qty-'+book_id).html(response.qty);
+                }
             }
         })
      })

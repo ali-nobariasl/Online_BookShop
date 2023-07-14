@@ -68,7 +68,7 @@ def add_to_cart(request,book_id):
         else:
             return JsonResponse({'status':'failed','message':'Invalid request.'})     
     else:
-        return JsonResponse({'status':'failed','message':'Please log in, bfore any actions.'})
+        return JsonResponse({'status':'login_required','message':'Please log in, before any actions.'})
 
 
 def decrease_cart(request,book_id):
@@ -95,4 +95,4 @@ def decrease_cart(request,book_id):
         else:
             return JsonResponse({'status':'failed','message':'Invalid request.'}) 
     else:
-        return JsonResponse({'status':'failed','message':'Please log in, bfore any actions.'})
+        return JsonResponse({'status':'login_required','message':'Please log in, before any actions.'})
