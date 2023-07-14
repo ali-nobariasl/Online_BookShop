@@ -110,7 +110,7 @@
                                                 <div class="price-holder">
                                                     <span class="price">{{ book.price }}</span>
                                                     <a href="#" class="decrease_cart" style="margin-right:28px;"><i class="icon-minus text-color"></i></a>
-                                                    <label id="">0</label>
+                                                    <label id="qty-{{book.id}}">0</label>
                                                     <a href="#" class="add_to_cart" data-id="{{book.id}}" data-url="{% url 'add_to_cart' book.id %}" ><i class="icon-plus4 text-color"></i></a>
                                                 </div>
                                             </li>
@@ -119,6 +119,7 @@
                                     
                                     {% endfor %}
                                     </div>
+                                   
                                 </div>
                             </div>
                             
@@ -132,7 +133,9 @@
 </div>
 <!-- Main Section End -->
 
-
+{% for item in cart_items %}
+    <span id="qty-{{item.bookitem.id}}" class="item_qty" data-qty="{{ item.quantity }}">{{ item.quantity }}</span>
+{% endfor %}
 
 
 
