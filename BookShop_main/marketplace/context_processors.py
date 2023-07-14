@@ -5,7 +5,7 @@ from stok.models import BookItem
 
 
 
-def get_cart_count(request):
+def get_cart_counter(request):
     
     cart_count = 0
     if request.user.is_authenticated:

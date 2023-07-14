@@ -5,7 +5,7 @@ from django.http import JsonResponse, HttpResponse
 from vendor.models import Vendor
 from stok.models import Category, BookItem
 from .models import Cart
-
+from .context_processors import get_cart_counter
 
 def marketplace  (request):
     
@@ -54,10 +54,10 @@ def add_to_cart(request,book_id):
                     chkcat = Cart.objects.get(user= request.user, bookitem=bookitem)
                     chkcat.quantity += 1
                     chkcat.save()
-                    return JsonResponse({'status':'Success','message':'quantity increased'})
+                    return JsonResponse({'status':'Success','message':'quantity increased','cart_counter':get_cart_counter(request)})
                 except:
                     chkcat = Cart.objects.create(user= request.user, bookitem=bookitem, quantity=1)
-                    return JsonResponse({'status':'Success','message':'cart created and quantity increased'})
+                    return JsonResponse({'status':'Success','message':'cart created and quantity increased','cart_counter':get_cart_counter(request)})
                     
             except:
                 return JsonResponse({'status':'failed','message':'this item is not exist'})
