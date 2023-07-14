@@ -69,3 +69,30 @@ def add_to_cart(request,book_id):
             return JsonResponse({'status':'failed','message':'Invalid request.'})     
     else:
         return JsonResponse({'status':'failed','message':'Please log in, bfore any actions.'})
+
+
+def decrease_cart(request,book_id):
+    
+    if request.user.is_authenticated:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            try:
+                bookitem= BookItem.objects.get(id=book_id)
+                try:
+                    chkcat = Cart.objects.get(user=request.user,bookitem=bookitem)
+                    if chkcat.quantity >1:
+                        chkcat.quantity -= 1
+                        chkcat.save()
+                    else:
+                        chkcat.delete()
+                        chkcat.quantity = 0
+                    return JsonResponse({'status':'Success','message':'quantity decrease',
+                                        'cart_counter':get_cart_counter(request),
+                                        'qty':chkcat.quantity })
+                except:
+                    return JsonResponse({'status':'failed','message':'you dont have this in.'})    
+            except:
+                return JsonResponse({'status':'failed','message':'this item is not exist'})
+        else:
+            return JsonResponse({'status':'failed','message':'Invalid request.'}) 
+    else:
+        return JsonResponse({'status':'failed','message':'Please log in, bfore any actions.'})
