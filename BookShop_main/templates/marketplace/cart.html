@@ -21,7 +21,7 @@
                                         <ul>
                                             {% if cartitems %}
                                                 {% for item in cartitems %}
-                                                    <li>
+                                                    <li id="cart-item-{{item.id}}">
                                                         <div class="image-holder"><img src="{{item.bookitem.image.url}}"></div>
                                                         <div class="text-holder">
                                                             <h6>{{ item.bookitem.book_title }}</h6>
