@@ -100,9 +100,9 @@ def decrease_cart(request,book_id):
     
 
 def cart(request):
-    context = {}
+    
+    
+    cartitems = Cart.objects.filter(user = request.user)
+    context = {'cartitems': cartitems}
     return render(request,'marketplace/cart.html',context=context)
 
-def doaitoz(request):
-    context = {}
-    return render(request,'marketplace/cart.html',context=context)
