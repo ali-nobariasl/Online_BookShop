@@ -61,5 +61,33 @@ $(document).ready(function(){
         })
      })
 
+     // delete cart
+     $('.delete_cart').on('click', function(e){
+        e.preventDefault();
+        
+        alert('fsgrag');
+        return false;
+        book_id = $(this).attr('data-id');
+        url = $(this).attr('data-url');
+        $.ajax({
+            type:'GET',
+            url:url,
+            success: function(response){
+                console.log(response);
+                if(response.status=='login_required'){
+                    swal(response.message,'','info').then(function(){
+                        window.location='/accounts/login/';
+                    })
+                }if(response.status=='failed'){
+                    swal(response.message,'','error')
+                }else{
+                    $('#cart_counter').html(response.cart_counter['cart_count']);
+                    $('#qty-'+book_id).html(response.qty);
+                }
+            }
+        })
+     })
+
+
 });
 
