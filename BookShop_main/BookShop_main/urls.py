@@ -4,7 +4,7 @@ from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from marketplace.views import cart
+from marketplace.views import cart, search
 from .views import index
 
 urlpatterns = [
@@ -15,11 +15,11 @@ urlpatterns = [
     path('marketplace/', include('marketplace.urls')),
     
     # cart
-    path('cart/', cart, name='cart'),             
+    path('cart/', cart, name='cart'), 
+    
+    # search
+    path('search/', search, name='search'),           
         
 ]
-
-
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
