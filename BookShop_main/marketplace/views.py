@@ -99,11 +99,10 @@ def decrease_cart(request,book_id):
         return JsonResponse({'status':'login_required','message':'Please log in, before any actions.'})
     
     
-
+@login_required(login_url='login')
 def cart(request):
     
-    
-    cartitems = Cart.objects.filter(user = request.user)
+    cartitems = Cart.objects.filter(user = request.user).order_by('created_at')
     context = {'cartitems': cartitems}
     return render(request,'marketplace/cart.html',context=context)
 

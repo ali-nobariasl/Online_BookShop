@@ -59,8 +59,12 @@ $(document).ready(function(){
                 }else{
                     $('#cart_counter').html(response.cart_counter['cart_count']);
                     $('#qty-'+book_id).html(response.qty);
-                    removeCartItem(response.qty, cart_id )
-                    checkEmptyCart();
+
+                    if(window.location.pathname =='/cart'){
+                        removeCartItem(response.qty, cart_id )
+                        checkEmptyCart();
+                        }
+                   
                 }
             }
         })
