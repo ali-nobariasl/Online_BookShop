@@ -90,7 +90,8 @@ def decrease_cart(request,book_id):
                         chkcat.quantity = 0
                     return JsonResponse({'status':'Success','message':'quantity decrease',
                                         'cart_counter':get_cart_counter(request),
-                                        'qty':chkcat.quantity })
+                                        'qty':chkcat.quantity,
+                                        'cart_amount':get_cart_amounts(request)})
                 except:
                     return JsonResponse({'status':'failed','message':'you dont have this in.'})    
             except:
@@ -117,7 +118,8 @@ def delete_cart(request, cart_id):
                 if item:
                     item.delete()
                     return JsonResponse({'status':'Success','message':'cart deleted successfully',
-                                         'cart_counter':get_cart_counter(request)})
+                                         'cart_counter':get_cart_counter(request),
+                                         'cart_amount':get_cart_amounts(request)})
             except:
                 return JsonResponse({'status':'failed','message':'this item is not exist'})
         else:

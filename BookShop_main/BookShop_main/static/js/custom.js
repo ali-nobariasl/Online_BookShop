@@ -1,8 +1,5 @@
 
 
-
-
-
 $(document).ready(function(){
     // add cart
      $('.add_to_cart').on('click', function(e){
@@ -67,7 +64,11 @@ $(document).ready(function(){
                 }else{
                     $('#cart_counter').html(response.cart_counter['cart_count']);
                     $('#qty-'+book_id).html(response.qty);
-
+                                        // subtotal tax and grand total
+                    appplyCartAmuounts(
+                                        response.cart_amount['subtotal'],
+                                        response.cart_amount['tax'],
+                                        response.cart_amount['grand_total'])
                     if(window.location.pathname =='/cart'){
                         removeCartItem(response.qty, cart_id )
                         checkEmptyCart();
@@ -94,6 +95,10 @@ $(document).ready(function(){
                 }else{
                     $('#cart_counter').html(response.cart_counter['cart_count']);
                     swal(response.message,'','success')
+                    appplyCartAmuounts(
+                        response.cart_amount['subtotal'],
+                        response.cart_amount['tax'],
+                        response.cart_amount['grand_total'])
                     removeCartItem(0, cart_id);
                     checkEmptyCart();
                 }
