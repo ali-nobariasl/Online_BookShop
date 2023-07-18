@@ -36,12 +36,15 @@ $(document).ready(function(){
         $('#'+the_id).html(qty)
      })
 
+
      // decrease cart
      $('.decrease_cart').on('click', function(e){
         e.preventDefault();
         
         book_id = $(this).attr('data-id');
         url = $(this).attr('data-url');
+        cart_id = $(this).attr('id');
+
         $.ajax({
             type:'GET',
             url:url,
@@ -56,6 +59,8 @@ $(document).ready(function(){
                 }else{
                     $('#cart_counter').html(response.cart_counter['cart_count']);
                     $('#qty-'+book_id).html(response.qty);
+                    removeCartItem(response.qty, cart_id )
+                    checkEmptyCart();
                 }
             }
         })
