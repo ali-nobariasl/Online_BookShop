@@ -29,8 +29,8 @@
 	<script src="assets/js/bootstrap.js"></script>
 	<script src="{% static 'js/custom.js' %}" type="text/javascript"></script>
 
-	{% if '/profile/' in request.GET %}
-
+	{% if '/profile/' in request.path %}
+	
 	{% endif %}
 	<style>
 		body, .main-section p, .mce-content-body p{
