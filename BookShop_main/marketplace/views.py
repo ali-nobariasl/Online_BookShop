@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from vendor.models import Vendor
 from stok.models import Category, BookItem
 from .models import Cart
-from .context_processors import get_cart_counter
+from .context_processors import get_cart_counter ,get_cart_amounts
 
 def marketplace  (request):
     
@@ -57,12 +57,14 @@ def add_to_cart(request,book_id):
                     chkcat.save()
                     return JsonResponse({'status':'Success','message':'quantity increased',
                                          'cart_counter':get_cart_counter(request),
-                                         'qty':chkcat.quantity })
+                                         'qty':chkcat.quantity,
+                                         'cart_amount':get_cart_amounts(request),})
                 except:
                     chkcat = Cart.objects.create(user= request.user, bookitem=bookitem, quantity=1)
                     return JsonResponse({'status':'Success','message':'cart created and quantity increased',
                                          'cart_counter':get_cart_counter(request),
-                                         'qty':chkcat.quantity })
+                                         'qty':chkcat.quantity,
+                                         'cart_amount':get_cart_amounts(request)})
                     
             except:
                 return JsonResponse({'status':'failed','message':'this item is not exist'})

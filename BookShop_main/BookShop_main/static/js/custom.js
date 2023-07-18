@@ -24,6 +24,14 @@ $(document).ready(function(){
                 }else{
                     $('#cart_counter').html(response.cart_counter['cart_count']);
                     $('#qty-'+book_id).html(response.qty);
+
+                    // subtotal tax and grand total
+                    appplyCartAmuounts(
+                        response.cart_amount['subtotal'],
+                        response.cart_amount['tax'],
+                        response.cart_amount['grand_total'],
+
+                    )
                 }
             }
         })
@@ -108,6 +116,17 @@ $(document).ready(function(){
         var cart_counter = document.getElementById('cart_counter').innerHTML
         if( cart_counter==0){
             document.getElementById("empty-cart").style.display = "block";
+        }
+     }
+
+
+     // appply cart amuounts
+     function appplyCartAmuounts(subtotal,grand_total, tax){
+
+        if(window.location.pathname=='/cart'){
+            $('#subtotal').html(subtotal);
+            $('#tax').html(tax);
+            $('#total').html(grand_total);
         }
      }
 });
