@@ -114,8 +114,9 @@ def edit_category(request,pk=None):
         if form.is_valid():
             category_name = form.cleaned_data['category_name']
             category = form.save(commit=False)
-            category.vendor = get_vendor(request)
-            category.slug = slugify(category_name)
+            category.vendor = get_vendor(request) 
+            category.save() # save the category will genereate the id
+            category.slug = slugify(category_name)+ '-'+ str(category.id)
             category.save()
             messages.success(request, 'Category update successfully')
             return redirect('menu_builder')
