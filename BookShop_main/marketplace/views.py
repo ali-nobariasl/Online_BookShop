@@ -2,6 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from django.db.models import Prefetch
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from vendor.models import Vendor
 from stok.models import Category, BookItem
@@ -135,13 +136,17 @@ def search(request):
     radius = request.GET['radius']  
     keyword = request.GET['keyword']
     
+    # get the vendor id that has item user need
+    fetch_vendor_by_bookitems= BookItem.objects.filter(book_title__icontains=keyword,
+                                            is_available=True).values_list('vendor',flat=True)
+    
     
     vendors = Vendor.objects.filter(vendor_name__icontains=keyword,
                                     is_approved=True,
                                     user__is_active=True)
     
+    vendors = Vendor.objects.filter(Q(id__in = fetch_vendor_by_bookitems)|Q(vendor_name__icontains=keyword, is_approved=True,user__is_active=True))
     vebdor_count = vendors.count()
-    
     context = {'vendors':vendors,
                'vebdor_count':vebdor_count,
                }
