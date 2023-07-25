@@ -4,7 +4,7 @@ function initAutoComplete(){
     autocomplete = new google.maps.places.AutoComplete(
         document.getElementById('id_address'),
         {
-            types: ['geocode','establishment'],
+            types: ['geocode','establishment'],  // geocod is for address //establishment is for business address
             // defaul in this app is "Tr". add your own country
             componentRestrictions:{'country':['tr']},
         })
@@ -21,9 +21,25 @@ function onPlaceChanged(){
             document.getElementById('id_address').placeholder ='Start typing ...'; 
         }
         else{
-            console.log('place name=>', place.name)
+           // console.log('place name=>', place.name)
         }
         // get the address components and assign them to the fields.
+
+        var geocoder = new google.maps.Geocoder()
+        var address = document.getElementById('id_address').value
+        geocoder.geocode({'address': address}, function(result, status){
+
+            if(status == google.maps.GeocoderStatus.ok){
+                var latitude = result[0].geometry.location.lat();
+                var longitude = result[1].geometry.location.lng();
+
+                $('id_latitude').val(latitude);
+                $('id_longitude').val(longitude);
+                $('id_address').val(address);
+            }
+        });
+        //loop through the address components and assign them to the fields
+        
 }
 
 

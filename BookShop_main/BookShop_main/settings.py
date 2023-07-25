@@ -152,7 +152,7 @@ EMAIL_USE_TLS = True
 
 # Google 
 
-GOOGLE_API_KEY = 'adsfd'
+GOOGLE_API_KEY = 'AIzaSyC4yTudrg9pTcB2khAgrbCMBfVvbviOhVU'
 
 
 os.environ['PATH'] = 'C:\Mine6\Django Env\DEnv\Lib\site-packages\osgeo' + ';' + os.environ['PATH']
