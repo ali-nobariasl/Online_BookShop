@@ -33,13 +33,34 @@ function onPlaceChanged(){
                 var latitude = result[0].geometry.location.lat();
                 var longitude = result[1].geometry.location.lng();
 
-                $('id_latitude').val(latitude);
-                $('id_longitude').val(longitude);
-                $('id_address').val(address);
+                $('#id_latitude').val(latitude);
+                $('#id_longitude').val(longitude);
+                $('#id_address').val(address);
             }
         });
         //loop through the address components and assign them to the fields
-        
+        for(var i = 0; i<place.address_components.length; i++){
+            for(var j = 0; j <place.address_components[i].types.length;j++){
+                if(place.address_components[i].types[j] == 'country'){
+                    $('#id_country').val(place.address_components[i].long_name);
+                }
+                // get state
+                if(place.address_components[i].types[j] == 'administrative_area_level_1'){
+                    $('#id_state').val(place.address_components[i].long_name);
+                }
+                // get city
+                if(place.address_components[i].types[j] == 'locality'){
+                    $('#id_city').val(place.address_components[i].long_name);
+                }
+                //get pin code
+                if(place.address_components[i].types[j] == 'postal_code'){
+                    $('#id_pin_code').val(place.address_components[i].long_name);
+                }else{
+                    $('#id_pin_code').val("");
+                }
+            }
+        }
+
 }
 
 
