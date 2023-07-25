@@ -3,7 +3,12 @@ from django.db.models import Prefetch
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+# geometry
+from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.gis.measure import D  # ``D`` is a shortcut for ``Distance``
+#from geoapp.models import SouthTexasCity
 
+# mine
 from vendor.models import Vendor
 from stok.models import Category, BookItem
 from .models import Cart
@@ -146,6 +151,9 @@ def search(request):
                                     user__is_active=True)
     
     vendors = Vendor.objects.filter(Q(id__in = fetch_vendor_by_bookitems)|Q(vendor_name__icontains=keyword, is_approved=True,user__is_active=True))
+    
+    if latitude and longitude and radius:
+        pnt = GEOSGeometry('POINT(%s  %s)' % (longitude, latitude )    
     vebdor_count = vendors.count()
     context = {'vendors':vendors,
                'vebdor_count':vebdor_count,
