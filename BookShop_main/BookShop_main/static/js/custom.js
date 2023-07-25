@@ -1,3 +1,32 @@
+let autocomplete;
+
+function initAutoComplete(){
+    autocomplete = new google.maps.places.AutoComplete(
+        document.getElementById('id_address'),
+        {
+            types: ['geocode','establishment'],
+            // defaul in this app is "Tr". add your own country
+            componentRestrictions:{'country':['tr']},
+        })
+    // functionto specify what should happen when the predicate is clicked
+    autocomplete.addListener('place_changed', onPlaceChanged )
+}
+
+
+function onPlaceChanged(){
+        var place = autocomplete.getPlace();
+
+        // USer did not select the prediction. Reset the input field or alert
+        if(!place.geometry){
+            document.getElementById('id_address').placeholder ='Start typing ...'; 
+        }
+        else{
+            console.log('place name=>', place.name)
+        }
+        // get the address components and assign them to the fields.
+}
+
+
 
 
 $(document).ready(function(){

@@ -153,7 +153,7 @@ def search(request):
     vendors = Vendor.objects.filter(Q(id__in = fetch_vendor_by_bookitems)|Q(vendor_name__icontains=keyword, is_approved=True,user__is_active=True))
     
     if latitude and longitude and radius:
-        pnt = GEOSGeometry('POINT(%s  %s)' % (longitude, latitude )    
+        pnt = GEOSGeometry('POINT(%s  %s)' % (longitude, latitude ))    
     vebdor_count = vendors.count()
     context = {'vendors':vendors,
                'vebdor_count':vebdor_count,
