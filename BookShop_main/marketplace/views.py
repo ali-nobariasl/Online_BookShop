@@ -155,7 +155,9 @@ def search(request):
     if latitude and longitude and radius:
         pnt = GEOSGeometry('POINT(%s  %s)' % (longitude, latitude ))    
     vebdor_count = vendors.count()
+    
     context = {'vendors':vendors,
                'vebdor_count':vebdor_count,
+               'source_location':address,
                }
     return render(request,'marketplace/listing.html',context= context)
