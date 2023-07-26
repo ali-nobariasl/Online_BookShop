@@ -6,6 +6,7 @@ from django.db.models import Q
 # geometry
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.measure import D  # ``D`` is a shortcut for ``Distance``
+from django.contrib.gis.db.models.functions import Distance
 #from geoapp.models import SouthTexasCity
 
 # mine

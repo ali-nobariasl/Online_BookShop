@@ -52,7 +52,11 @@
 
 		<script>
 			var x = document.getElementById("location");
-			
+			var current_location = sectionStorage.getItem("current_location")
+			if (current_location != ""){
+				x.value = current_location;
+			}
+
 			function getLocation(){
 				if(navigator.geolocation)
 					{navigator.geolocation.getCurrentPosition(showPosition);}
@@ -80,6 +84,8 @@
 					success: function(response){
 						var current_location = response.results[0].formatted_address
 						x.value = current_location
+						sectionStorage.setItem("current_location",current_location)
+						window.location = '?lat='+lat+'&lng='+lng
 					}
 				})
 				
