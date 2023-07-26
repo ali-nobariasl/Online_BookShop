@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404, redirect
 from django.db.models import Prefetch
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -134,30 +134,32 @@ def delete_cart(request, cart_id):
         
 
 def search(request):
-    
-    address = request.GET['address']
-    latitude = request.GET['lat']
-    longitude = request.GET['lng']
-    radius = request.GET['radius']  
-    keyword = request.GET['keyword']
-    
-    # get the vendor id that has item user need
-    fetch_vendor_by_bookitems= BookItem.objects.filter(book_title__icontains=keyword,
-                                            is_available=True).values_list('vendor',flat=True)
-    
-    
-    vendors = Vendor.objects.filter(vendor_name__icontains=keyword,
-                                    is_approved=True,
-                                    user__is_active=True)
-    
-    vendors = Vendor.objects.filter(Q(id__in = fetch_vendor_by_bookitems)|Q(vendor_name__icontains=keyword, is_approved=True,user__is_active=True))
-    
-    if latitude and longitude and radius:
-        pnt = GEOSGeometry('POINT(%s  %s)' % (longitude, latitude ))    
-    vebdor_count = vendors.count()
-    
-    context = {'vendors':vendors,
-               'vebdor_count':vebdor_count,
-               'source_location':address,
-               }
+    if not 'address' in request.GET:
+        return redirect(marketplace)
+    else:
+        address = request.GET['address']
+        latitude = request.GET['lat']
+        longitude = request.GET['lng']
+        radius = request.GET['radius']  
+        keyword = request.GET['keyword']
+        
+        # get the vendor id that has item user need
+        fetch_vendor_by_bookitems= BookItem.objects.filter(book_title__icontains=keyword,
+                                                is_available=True).values_list('vendor',flat=True)
+
+        vendors = Vendor.objects.filter(Q(id__in = fetch_vendor_by_bookitems)|Q(vendor_name__icontains=keyword,
+                                        is_approved=True,user__is_active=True))
+        
+        if latitude and longitude and radius:
+            pnt = GEOSGeometry('POINT(%s  %s)' % (longitude, latitude ))    
+            vendors = Vendor.objects.filter(Q(id__in = fetch_vendor_by_bookitems)|Q(vendor_name__icontains=keyword,
+            is_approved=True,user__is_active=True))
+            
+            for v in vendors:
+                v.kms =v.distance.km
+        vendor_count = vendors.count()
+        context = {'vendors':vendors,
+                'vebdor_count':vendor_count,
+                'source_location':address,
+                }
     return render(request,'marketplace/listing.html',context= context)
