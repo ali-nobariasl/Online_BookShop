@@ -29,7 +29,7 @@
 	<script src="assets/js/bootstrap.js"></script>
 	<script src="{% static 'js/custom.js' %}"></script>
 
-	{% if '/profile/' in request.path %}
+	{% if '/'== request.path or if 'profile' in request.path %}
 		<script src="https://maps.googleapis.com/maps/api/js?key={{GOOGLE_API_KEY}}&libraries=places&callback=initAutoComplete" async defer></script>
 	{% endif %}
 	
