@@ -23,4 +23,7 @@ urlpatterns = [
     path('menu-builder/book/edit/<int:pk>/', views.edit_book, name='edit_book'),
     path('menu-builder/book/delete/<int:pk>/', views.delete_book, name='delete_book'),
     
+    ## Opening hours CRUD
+    path('opening-hours/',views.opening_hours, name='opening_hours'),
+    
 ]

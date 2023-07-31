@@ -202,3 +202,9 @@ def delete_book(request, pk=None):
     messages.success(request,'Book deleted successfully')
     
     return redirect('bookitems_by_category', book.category.id)
+
+
+def opening_hours(request):
+    
+    context = {}
+    return render(request, 'vendor/opening_hours.html', context=context)
