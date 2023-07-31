@@ -24,8 +24,11 @@
                                     <div class="user-holder">
                                         <h5 class="text-uppercase">Opening Hours</h5>
                                         <hr>
-                                 
-                                        
+                                            {% for hour in opening_hours %}
+                                                {{ hour }}{{ hour.from_hour}} {{ hour.to_hour}}
+                                            {% endfor %}
+
+                                            
                                     </div>
 								</div>
 							</div>

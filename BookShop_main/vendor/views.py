@@ -2,12 +2,15 @@ from django.shortcuts import render , get_object_or_404 , redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.template.defaultfilters import slugify
-from .forms import VendorForm
-from accounts.forms import UserProfileForm
 
-from .models import Vendor
+
+
+from.forms import VendorForm, OpeningHourForm
+from .models import Vendor, OpeningHour
+
 from accounts.models import UserProfile
 from accounts.views import check_role_vendor
+from accounts.forms import UserProfileForm
 
 from stok.models import Category , BookItem
 from stok.forms import CategoryForm , BookItemForm
@@ -205,6 +208,8 @@ def delete_book(request, pk=None):
 
 
 def opening_hours(request):
-    
-    context = {}
+    opening_hours = OpeningHour.objects.filter(vendor=get_vendor(request))
+    form = OpeningHourForm()
+    context = {'opening_hours':opening_hours,
+               'form': form}
     return render(request, 'vendor/opening_hours.html', context=context)
