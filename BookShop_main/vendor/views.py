@@ -213,3 +213,8 @@ def opening_hours(request):
     context = {'opening_hours':opening_hours,
                'form': form}
     return render(request, 'vendor/opening_hours.html', context=context)
+
+
+def add_opening_hours(request):
+    
+    return 
