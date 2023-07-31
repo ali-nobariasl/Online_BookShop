@@ -1,4 +1,5 @@
-from django.shortcuts import render , get_object_or_404 , redirect ,HttpResponse
+from django.shortcuts import render , get_object_or_404 , redirect 
+from django.http import HttpResponse , JsonResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.template.defaultfilters import slugify
@@ -217,4 +218,22 @@ def opening_hours(request):
 
 def add_opening_hours(request):
     
-    return HttpResponse('ADD MOZ')
+    if request.user.is_authenticated:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == 'POST':
+            day = request.POST.get('day')
+            from_hour = request.POST.get('from_hour')
+            at_hour= request.POST.get('at_hour')
+            is_closed = request.POST.get('is_closed')
+            
+            try:
+                hour = OpeningHour.objects.create(vendor=get_vendor(request), day=day, from_hour=from_hour,
+                                                  at_hour=at_hour, is_closed=is_closed)
+                
+                response = {'status':'success'}
+                return JsonResponse(response)
+            except IntegrityError as e:
+                response = {'status':'failed'}
+                return JsonResponse(response)
+        else:
+            return  HttpResponse('Invalide request')
+            

@@ -211,31 +211,7 @@ $(document).ready(function(){
         var csrf_token = $('input[name=csrfmiddlewaretoken]').val()
         var url = document.getElementById('add_hour_url').value
 
-        if(is_closed){
-            is_closed ='True'
-            condition = "day != ''"
-        }else{
-            is_closed ='False'
-            condition = "day != '' && from_hour != '' && to_hour != ''"
-        }
-
-        if (eval(condition)){
-            $.ajax({
-                type: 'POST',
-                url:url,
-                data:{
-                    'day':day,
-                    'from_hour':from_hour,
-                    'to_hour':to_hour,
-                    'is_closed':is_closed,
-                    'csrtmiddlewaretoken':csrf_token,
-                },
-                success: function(response){
-                console.log(response)
-            }})
-        }else{
-            swal('Please fill all fields','','info')
-        }
+        alert('moz')
      })
      // document ready close
 
