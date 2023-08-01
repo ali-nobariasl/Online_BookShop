@@ -22,7 +22,7 @@
                                 </figure>
                             </div>
                             <div class="text-holder">
-                                <span class="restaurant-title">{{vendor}} </span>
+                                <span class="restaurant-title">{{vendor}} {% if not is_open %}[closed]{% endif %} </span>
                                 <div class="text">
                                     {% if vendor.user_profile.address %}
                                         <i class="icon-location"></i>
@@ -39,7 +39,7 @@
                                         <a href="#" class="reviews-sortby-active">
                                             <span>Today :</span>
                                             {% for i in current_opening_hours %}
-                                                <span>{% if i.is_closed %}Closed{% else %}{{i.from_hour}}-{{to_hour}} </span>
+                                                <span>{% if i.is_closed %}Closed{% else %}{{i.from_hour}}-{{to_hour}}{% endif %} </span>
                                                 11:00 am - 11:00 pm <i class="icon-chevron-small-down"></i>
                                             {% endfor %}
                                         </a>
