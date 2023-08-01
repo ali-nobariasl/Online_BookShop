@@ -3,7 +3,7 @@ from django.http import HttpResponse , JsonResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.template.defaultfilters import slugify
-
+from django.db import IntegrityError
 
 
 from.forms import VendorForm, OpeningHourForm
@@ -222,17 +222,22 @@ def add_opening_hours(request):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == 'POST':
             day = request.POST.get('day')
             from_hour = request.POST.get('from_hour')
-            at_hour= request.POST.get('at_hour')
+            to_hour= request.POST.get('to_hour')
             is_closed = request.POST.get('is_closed')
             
             try:
                 hour = OpeningHour.objects.create(vendor=get_vendor(request), day=day, from_hour=from_hour,
-                                                  at_hour=at_hour, is_closed=is_closed)
-                
-                response = {'status':'success'}
+                                                  to_hour=to_hour, is_closed=is_closed)
+                if hour:
+                    day = OpeningHour.objects.get(id=hour.id)
+                    if day.is_closed:
+                        response = {'status':'success', 'id':hour.id, 'day':day.get_day_display(), 'is_closed':'closed'}
+                    else:
+                        response = {'status':'success', 'id':hour.id, 'day':day.get_day_display(),'from_hour':hour.from_hour, 'to_hour':hour.to_hour }
+                        
                 return JsonResponse(response)
             except IntegrityError as e:
-                response = {'status':'failed'}
+                response = {'status':'failed','message':from_hour+'-' + to_hour + ' is already exists', 'error':str(e)}
                 return JsonResponse(response)
         else:
             return  HttpResponse('Invalide request')
