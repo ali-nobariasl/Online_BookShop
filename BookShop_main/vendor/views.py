@@ -242,3 +242,13 @@ def add_opening_hours(request):
         else:
             return  HttpResponse('Invalide request')
             
+ 
+    
+    
+def remove_opening_hours(request, pk=None):
+    if request.user.is_authenticated:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            hour = get_object_or_404(OpeningHour, pk=pk)
+            hour.delete()
+            response = {'status':'success', 'id':pk}
+            return JsonResponse(response)
