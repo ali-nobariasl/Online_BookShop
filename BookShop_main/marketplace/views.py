@@ -10,7 +10,7 @@ from django.contrib.gis.db.models.functions import Distance
 #from geoapp.models import SouthTexasCity
 
 # mine
-from vendor.models import Vendor
+from vendor.models import Vendor , OpeningHour
 from stok.models import Category, BookItem
 from .models import Cart
 from .context_processors import get_cart_counter ,get_cart_amounts
@@ -28,7 +28,6 @@ def marketplace  (request):
 
 
 def vendor_detail(request,vendor_slug):
-    
     vendor = get_object_or_404(Vendor,vendor_slug=vendor_slug )
     
     categories = Category.objects.filter(vendor=vendor).prefetch_related(
@@ -38,6 +37,10 @@ def vendor_detail(request,vendor_slug):
         )
     )
     
+    opening_hours = OpeningHour.objects.filter(vendor=vendor).order_by('day','from_hour')
+    print(opening_hours)
+    
+    
     if request.user.is_authenticated:
         cart_items = Cart.objects.filter(user=request.user)
     else:
@@ -45,7 +48,8 @@ def vendor_detail(request,vendor_slug):
         
     context = {'vendor':vendor,
                'categories':categories,
-               'cart_items':cart_items,}
+               'cart_items':cart_items,
+               'opening_hours':opening_hours,}
     return render(request, 'marketplace/vendor_detail.html', context=context)
 
 
