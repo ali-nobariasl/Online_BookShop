@@ -38,7 +38,10 @@
                                     <li>
                                         <a href="#" class="reviews-sortby-active">
                                             <span>Today :</span>
-                                            11:00 am - 11:00 pm <i class="icon-chevron-small-down"></i>
+                                            {% for i in current_opening_hours %}
+                                                <span>{% if i.is_closed %}Closed{% else %}{{i.from_hour}}-{{to_hour}} </span>
+                                                11:00 am - 11:00 pm <i class="icon-chevron-small-down"></i>
+                                            {% endfor %}
                                         </a>
                                         <ul class="delivery-dropdown">
                                             {% for hour in opening_hours %}
