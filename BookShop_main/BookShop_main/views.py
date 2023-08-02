@@ -13,7 +13,7 @@ def get_or_set_current_location(request):
         lat = request.session['lat']
         lng = request.session['lng']
         return lng,lat
-    elif 'lat' in request.get:
+    elif 'lat' in request.GET:
         lat = request.GET.get('lat')
         lng = request.GET.get('lng')
         request.session['lat'] = lat

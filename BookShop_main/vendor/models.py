@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import date, datetime
+from datetime import date, datetime, time
 
 
 from accounts.models import User , UserProfile
@@ -24,7 +24,7 @@ class Vendor(models.Model):
         today_date = date.today()
         today = today_date.isoweekday()
         
-        current_opening_hours = OpeningHour.objects.filter(vendor=vendor, day=today)
+        current_opening_hours = OpeningHour.objects.filter(vendor=self, day=today)
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         

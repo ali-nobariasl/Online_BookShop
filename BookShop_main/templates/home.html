@@ -125,12 +125,18 @@
 															<a href="#"><img src="{{ vendor.user_profile.profile_picture.url }}" class="attachment-full size-full wp-post-image" alt=""></a>
 														{% else %}
 															<a href="#"><img src="{% static 'images/default-profile.jpg' %}" class="attachment-full size-full wp-post-image" alt=""></a>
-														{%endif %}
+														{% endif %}
 													</a>
 												</figure>
-												<span class="restaurant-status close">
-													<em class="bookmarkRibbon"></em>Close
-												</span>
+												{% if vendor.is_open %}
+													<span class="restaurant-status open">
+														<em class="bookmarkRibbon"></em>Open
+													</span>
+												{% else %}
+													<span class="restaurant-status close">
+														<em class="bookmarkRibbon"></em>Close
+													</span>
+												{% endif %}
 											</div>
 											<div class="text-holder">
 
@@ -147,7 +153,7 @@
 												{% if vendor.kms %}
 													<br>
 													<span><small><b>{{ vendor.kms }} km</b></small></span>
-
+												{% endif %}
 											</div>
 											
 										</div>
