@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'stok',
     'marketplace',
     'django.contrib.gis',
+    'customers',
 ]
 
 MIDDLEWARE = [

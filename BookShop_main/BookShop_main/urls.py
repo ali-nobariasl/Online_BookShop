@@ -18,7 +18,8 @@ urlpatterns = [
     path('cart/', cart, name='cart'), 
     
     # search
-    path('search/', search, name='search'),           
+    path('search/', search, name='search'),   
+            
         
 ]
 if settings.DEBUG:
