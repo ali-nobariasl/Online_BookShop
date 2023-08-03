@@ -91,7 +91,7 @@ $(document).ready(function(){
                     // subtotal tax and grand total
                     appplyCartAmuounts(
                         response.cart_amount['subtotal'],
-                        response.cart_amount['tax'],
+                        response.cart_amount['tax_dic'],
                         response.cart_amount['grand_total'],
 
                     )
@@ -133,7 +133,7 @@ $(document).ready(function(){
                                         // subtotal tax and grand total
                     appplyCartAmuounts(
                                         response.cart_amount['subtotal'],
-                                        response.cart_amount['tax'],
+                                        response.cart_amount['tax_dic'],
                                         response.cart_amount['grand_total'])
                     if(window.location.pathname =='/cart'){
                         removeCartItem(response.qty, cart_id )
@@ -163,7 +163,7 @@ $(document).ready(function(){
                     swal(response.message,'','success')
                     appplyCartAmuounts(
                         response.cart_amount['subtotal'],
-                        response.cart_amount['tax'],
+                        response.cart_amount['tax_dic'],
                         response.cart_amount['grand_total'])
                     removeCartItem(0, cart_id);
                     checkEmptyCart();
@@ -192,12 +192,17 @@ $(document).ready(function(){
 
 
      // appply cart amuounts
-     function appplyCartAmuounts(subtotal,grand_total, tax){
+     function appplyCartAmuounts(subtotal,tax_dic, grand_total){
+        if(window.location.pathname == '/cart/'){
+            $('#subtotal').html(subtotal)
+            $('#total').html(grand_total)
 
-        if(window.location.pathname=='/cart'){
-            $('#subtotal').html(subtotal);
-            $('#tax').html(tax);
-            $('#total').html(grand_total);
+            for(key1 in tax_dic){
+                 for(key2 in tax_dic[key1]){
+                    $('#tax-'+key1).html(tax_dic[key1][key2])
+                    //console.log(tax_dic[key1][key2])
+                 }  
+            }
         }
      }
 
