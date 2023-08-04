@@ -20,8 +20,12 @@ urlpatterns = [
     # search
     path('search/', search, name='search'),   
     
+    # checkout
     path('checkout/', checkout, name='checkout'),   
-       
+    
+    # oders
+    path('oders/',include('orders.urls')),   
+    
         
 ]
 if settings.DEBUG:
