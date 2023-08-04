@@ -172,6 +172,10 @@
             }
         }
     }
+
+    $('input[name=payment_method]').on('change',function(){
+        $('#payment-method-error').html("");
+    })
 </script>
 
 {% endblock %}
