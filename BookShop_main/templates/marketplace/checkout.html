@@ -78,7 +78,7 @@
                                                             <a hre="{% url 'vendor_detail' item.bookitem.vendor.vendor_slug %}" class="badge badge-warning" >{{ item.bookitem.vendor }}</a>
                                                         </div>
                                                         <div class="quantity" style="display: inline-block; position: absolute; top:50%; trasnform: translateY(-50%); margin-top: -10px; ">
-                                                            <span>{{ item.quantity }}QTY</span>
+                                                            <span>{{ item.quantity }} QTY</span>
                                                         </div>
                                                         <div class="price-holder">
                                                             <span class="price">{{ item.bookitem.price }}</span>
@@ -124,20 +124,23 @@
                                             <div class="payment-method">
                                                 <label>
                                                     <input type="radio" name="payment_method" value="PayPal">
-                                                    <img src="{% static 'image/Paypal.png' %}" alt="PayPal" width="100">
+                                                    <img src="{% static 'images/PayPal.png' %}" alt="PayPal" width="100">
                                                 </label>
+                                                &emsp;
                                                 <label>
-                                                    <input type="radio" name="payment_method" value="PayPal">
-                                                    <img src="{% static 'image/Paypal.png' %}" alt="Visa" width="100">
+                                                    <input type="radio" name="payment_method" value="Visa">
+                                                    <img src="{% static 'images/viza.jpg' %}" alt="Visa" width="100">
                                                 </label>
+                                                &emsp;
                                                 <label>
-                                                    <input type="radio" name="payment_method" value="PayPal">
-                                                    <img src="{% static 'image/Paypal.png' %}" alt="Master" width="100">
+                                                    <input type="radio" name="payment_method" value="MasterCard">
+                                                    <img src="{% static 'images/mastercart.jpg' %}" alt="MasterCard" width="100">
                                                 </label>
                                             </div>
+                                            <span class="text-danger" id="payment-method-error"></span>
                                             <!-- select payment method -->
                                             
-                                            <button type="submit"  class="btn btn-danger w-100 p-2 mt-3">Place Order</button>
+                                            <button onclick="return payMethodConfirm();" type="submit"  class="btn btn-danger w-100 p-2 mt-3">Place Order</button>
                                         </ul>
                                     
                                     </form>
@@ -154,7 +157,22 @@
     </div>
 </div>
 
-
+<script>
+    function payMethodConfirm(){
+        var payMethod = $("input[name='payment_method']:checked").val()
+        if(!payMethod){
+            $('#payment-method-error').html("Please select payment Method!");
+            return false;
+        }else{
+            var conf = confirm('You have selected '+payMethod+' as your preferred payment method.\nclick "ok" to continue.')
+            if(conf== true){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+</script>
 
 {% endblock %}
 
