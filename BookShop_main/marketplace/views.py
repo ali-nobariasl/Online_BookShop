@@ -15,7 +15,7 @@ from vendor.models import Vendor , OpeningHour
 from stok.models import Category, BookItem
 from .models import Cart
 from .context_processors import get_cart_counter ,get_cart_amounts
-
+from orders.forms import OrderForm
 def marketplace  (request):
     
     vendors = Vendor.objects.filter(is_approved=True, user__is_active=True)
@@ -176,5 +176,6 @@ def search(request):
 
 def checkout(request):
     
-    context= {}
+    form = OrderForm()
+    context= {'form': form,}
     return render(request,'marketplace/checkout.html',context=context)
