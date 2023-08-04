@@ -4,7 +4,7 @@ from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from marketplace.views import cart, search
+from marketplace.views import cart, search, checkout
 from .views import index
 
 urlpatterns = [
@@ -19,7 +19,9 @@ urlpatterns = [
     
     # search
     path('search/', search, name='search'),   
-            
+    
+    path('checkout/', checkout, name='checkout'),   
+       
         
 ]
 if settings.DEBUG:

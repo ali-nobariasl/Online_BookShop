@@ -173,3 +173,8 @@ def search(request):
                 'source_location':address,
                 }
     return render(request,'marketplace/listing.html',context= context)
+
+def checkout(request):
+    
+    context= {}
+    return render(request,'marketplace/checkout.html',context=context)
