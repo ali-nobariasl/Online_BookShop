@@ -39,6 +39,8 @@ def place_order(request):
             order.tax_data = json.dumps(tax_data)
             order.total_tax = total_tax
             order.payment_method = request.POST['payment_method']
+            
+            order.save() # pk is created after saveing , so we should use it after save
             order.order_number = generate_order_numebr(order.id)
             order.save()
             return redirect('place_order')
