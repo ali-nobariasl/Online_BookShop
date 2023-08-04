@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
 
@@ -67,9 +67,8 @@
                             <div id="home" class="tab-pane in active">
                                 <div class="menu-itam-holder">
                                     <div id="menu-item-list-6272" class="menu-itam-list">
-                                        
                                         <ul>
-                                            {% if cart_items %}
+                                            
                                                 {% for item in cart_items %}
                                                     <li id="cart-item-{{item.id}}">
                                                         <div class="image-holder"><img src="{{item.bookitem.image.url}}"></div>
@@ -86,7 +85,7 @@
                                                         </div>
                                                     </li>
                                                 {% endfor %}
-                                            {% endif %}
+                                            
                                         </ul>   
                                     </div>
                                     <div>
@@ -118,6 +117,26 @@
                                                     <span id="total">{{ grand_total }}</span>
                                                 </span>
                                             </li>
+
+                                            <!-- select payment method -->
+                                            <hr>
+                                            <h5> Select payment method</h5>
+                                            <div class="payment-method">
+                                                <label>
+                                                    <input type="radio" name="payment_method" value="PayPal">
+                                                    <img src="{% static 'image/Paypal.png' %}" alt="PayPal" width="100">
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="payment_method" value="PayPal">
+                                                    <img src="{% static 'image/Paypal.png' %}" alt="Visa" width="100">
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="payment_method" value="PayPal">
+                                                    <img src="{% static 'image/Paypal.png' %}" alt="Master" width="100">
+                                                </label>
+                                            </div>
+                                            <!-- select payment method -->
+                                            
                                             <button type="submit"  class="btn btn-danger w-100 p-2 mt-3">Place Order</button>
                                         </ul>
                                     
