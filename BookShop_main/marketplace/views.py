@@ -16,6 +16,8 @@ from stok.models import Category, BookItem
 from .models import Cart
 from .context_processors import get_cart_counter ,get_cart_amounts
 from orders.forms import OrderForm
+from marketplace.models import Cart
+
 def marketplace  (request):
     
     vendors = Vendor.objects.filter(is_approved=True, user__is_active=True)
@@ -174,8 +176,13 @@ def search(request):
                 }
     return render(request,'marketplace/listing.html',context= context)
 
+
 def checkout(request):
-    
+    cart_items = Cart.objects.filter(user= request.user).order_by('created_at')
+    cart_count = cart_items.count()
+    if cart_count <= 0:
+        return redirect('marketplace')
     form = OrderForm()
-    context= {'form': form,}
+    context= {'form': form,
+              'cart_items':cart_items,}
     return render(request,'marketplace/checkout.html',context=context)

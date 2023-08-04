@@ -66,6 +66,29 @@
                         <div class="tab-content">
                             <div id="home" class="tab-pane in active">
                                 <div class="menu-itam-holder">
+                                    <div id="menu-item-list-6272" class="menu-itam-list">
+                                        
+                                        <ul>
+                                            {% if cart_items %}
+                                                {% for item in cart_items %}
+                                                    <li id="cart-item-{{item.id}}">
+                                                        <div class="image-holder"><img src="{{item.bookitem.image.url}}"></div>
+                                                        <div class="text-holder">
+                                                            <h6>{{ item.bookitem.book_title }}</h6>
+                                                            <span>{{ item.bookitem.description }}</span>
+                                                            <a hre="{% url 'vendor_detail' item.bookitem.vendor.vendor_slug %}" class="badge badge-warning" >{{ item.bookitem.vendor }}</a>
+                                                        </div>
+                                                        <div class="quantity" style="display: inline-block; position: absolute; top:50%; trasnform: translateY(-50%); margin-top: -10px; ">
+                                                            <span>{{ item.quantity }}QTY</span>
+                                                        </div>
+                                                        <div class="price-holder">
+                                                            <span class="price">{{ item.bookitem.price }}</span>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </ul>   
+                                    </div>
                                     <div>
                                         <ul>
                                             <li style="list-style-type: none;">
@@ -95,8 +118,10 @@
                                                     <span id="total">{{ grand_total }}</span>
                                                 </span>
                                             </li>
-                                            <a href="{% url 'checkout' %}" class="btn btn-danger w-100 p-2 mt-3">Place Order</a>
+                                            <button type="submit"  class="btn btn-danger w-100 p-2 mt-3">Place Order</button>
                                         </ul>
+                                    
+                                    </form>
                                     </div>
                                 </div>
                             </div>
