@@ -1,6 +1,8 @@
 from django.shortcuts import render , get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+
+from orders.models import Order
 from accounts.forms import UserProfileForm , UserInfoForm
 from accounts.models import UserProfile
 
@@ -27,3 +29,12 @@ def cprofile(request):
                'user_form':user_form,
                'profile':profile,}
     return render(request, 'customers/cprofile.html', context=context)
+
+
+def my_orders(request):
+    
+    orders = Order.objects.filter(user= request.user).order_by('created_at')
+    context = {
+        'orders':orders,
+    }
+    return render(request, 'customers/my_orders.html',context=context)
