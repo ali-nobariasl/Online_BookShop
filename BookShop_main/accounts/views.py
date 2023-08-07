@@ -167,9 +167,11 @@ def myAccount(request):
 def custDashboard(request):
     
     orders = Order.objects.filter(user=request.user, is_ordered=True)
-    context = {'orders':orders,
+    recent_orders = orders[:5]
+    context = {'recent_orders':recent_orders,
                'orders_count': orders.count(),
                }
+    print(orders)
     return render(request, 'accounts/custDashboard.html',context=context)
 
 
