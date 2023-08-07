@@ -29,7 +29,7 @@
 														Total Orders
 													</div>
 													<div class="card-body text-center" >
-														12345
+														{{orders_count}}
 													</div>
 												</div>
 											</div>
@@ -45,55 +45,43 @@
 											</div>
 											
 										</div>
-										<div class="row">
+									
+									</div>
+									<div class="row">
 											
-											<div class="element-title has-border right-filters-row">
-												<h5>Recent Orders</h5>
-											</div>
+										<div class="element-title has-border right-filters-row">
+											<h5>Recent Orders</h5>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 											<div class="user-orders-list">
 												<div class="responsive-table">
-													<ul class="table-generic">
-														<li class="order-heading-titles">
-															<div>Order id</div>
-															<div>Date</div>
-															<div>Total Price</div>
-															<div>Charges</div>
-															<div>Received</div>
-															<div>Status</div>
-														</li>
-														<li class="order-heading-titles">
-															<div><a href="#" data-toggle="modal" data-target="#order-det-22606">order-22606</a></div>
-															<div>Apr 9,2020</div>
-															<div>£ 38.99</div>
-															<div>£ 3.90</div>
-															<div>£ 35.09</div>
-															<div><span class="order-status" style="background-color: #047a06;">Completed</span></div>
-														</li>
-														
-														
-														
-														<li class="order-heading-titles">
-															<div><a href="#" data-toggle="modal" data-target="#order-det-22606">order-22583</a></div>
-															<div>Apr 9,2020</div>
-															<div>£ 26.22</div>
-															<div>£ 2.62</div>
-															<div>£ 23.60</div>
-															<div><span class="order-status" style="background-color: #1e73be;">Processing</span></div>
-														</li>
-														<li class="order-heading-titles">
-															<div><a href="#" data-toggle="modal" data-target="#order-det-22606">order-22493</a></div>
-															<div>Apr 2,2020</div>
-															<div>£ 28.24</div>
-															<div>£ 2.82</div>
-															<div>£ 25.42</div>
-															<div><span class="order-status" style="background-color: #047a06;">Completed</span></div>
-														</li>
-													</ul>
 
+													<table class="table table-hover">
+														<thead>
+															<tr>
+																<th scop="col">Order </th>	
+																<th scop="col">Name </th>		
+																<th scop="col">Total </th>	
+																<th scop="col">Status </th>	
+																<th scop="col">Date </th>	
+																<th scop="col">Action </th>	
+															</tr>
+														</thead>
+														<tbody>
+															{% for order in orders %}
+															<tr>
+																<td>{{ order.order_number }}</td>
+																<td>{{ order.name }}</td>
+																<td>{{ order.total }}</td>
+																<td>{{ order.status }}</td>
+																<td>{{ order.created_at }}</td>
+																<td><a href="" class="btn btn-danger">Details</a> </td>
+															</tr>
+															{% endfor %}
+														</tbody>
+													</table>
 												</div>												
 											</div>
 										</div>
