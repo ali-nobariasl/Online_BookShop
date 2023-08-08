@@ -42,5 +42,10 @@ def my_orders(request):
 
 def order_detail(request, order_number):
     
-    context = {}
+    
+    context = {
+        
+    }
     return render(request, 'customers/order_detail.html',context=context)
+
+def():
