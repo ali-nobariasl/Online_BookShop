@@ -1,8 +1,9 @@
 from django.shortcuts import render , get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import simplejson as json
 
-from orders.models import Order
+from orders.models import Order,OrderedBook
 from accounts.forms import UserProfileForm , UserInfoForm
 from accounts.models import UserProfile
 
@@ -41,11 +42,21 @@ def my_orders(request):
 
 
 def order_detail(request, order_number):
-    
-    
-    context = {
+    try: 
+        order = Order.objects.get( order_number=order_number)
+        ordered_food = OrderedBook.objects.filter(order=order)
+        subtotal = 0
+        for item in ordered_food:
+            subtotal += (item.price * item.quantity)
+        tax_data = json.loads(order.tax_data)
         
-    }
-    return render(request, 'customers/order_detail.html',context=context)
+        context = {
+            'order':order,
+            'ordered_food':ordered_food,
+            'tax_data':tax_data,
+            'subtotal':subtotal,
+        }
+        return render(request, 'customers/order_detail.html',context=context)
+    except:
+        return redirect('customer')
 
-def():
