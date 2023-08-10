@@ -8,7 +8,7 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                     <div class="tabs-holder horizontal">
                         <ul class="stickynav-tabs nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#home"><i class="fa fa-shopping-cart"></i>Review Your Belling Address</a></li>
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                     <div class="tabs-holder horizontal">
                         <ul class="stickynav-tabs nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#home"><i class="icon-book"></i>Your OrderList</a></li>
@@ -47,6 +47,19 @@
                             <div id="home" class="tab-pane in active">
                                 <div class="menu-itam-holder">
                                     <div>
+                                        <table class="table">
+                                            <tbody>
+                                                {% for item in cart_items %}
+                                                <tr>
+                                                    <td><img src="{{item.bookitem.image.url }}" width="40" alt="Book Image"> </td>
+                                                    <td><b> {{item.bookitem}} </b></td>
+                                                    <td> {{item.quantity }} </td>
+                                                    <td>${{item.bookitem.price}} </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+
                                         <ul>
                                             <li style="list-style-type: none;">
                                                 Subtotal
