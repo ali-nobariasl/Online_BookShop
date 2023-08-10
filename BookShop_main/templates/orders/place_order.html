@@ -67,7 +67,9 @@
                                                     <span id="total">{{ grand_total }}</span>
                                                 </span>
                                             </li>
-                                            <a href="{% url 'checkout' %}" class="btn btn-danger w-100 p-2 mt-3">Procced to Checkout</a>
+                                            
+                                            <!-- paypal Check out button -->
+                                            <div id="paypal-button-container"></div>
                                         </ul>
                                     </div>
                                 </div>
@@ -83,6 +85,31 @@
 </div>
 
 
+<script>
+    // Render the PayPal button into #paypal-button-container
+    paypal.Buttons({
+
+        // Call your server to set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units:[{
+                    amount:{
+                        value: '88'
+                    }
+                }]
+            })
+        },
+
+        // Call your server to finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(orderData){
+                var transaction = orderData.purchase[0].payments.captures[0];
+                alert('transaction'+ transaction.status + ':'+transaction.id+'\n\nsee console for all:')
+            });
+        }
+
+    }).render('#paypal-button-container');
+</script>
 
 {% endblock %}
 
