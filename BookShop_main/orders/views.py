@@ -45,11 +45,16 @@ def place_order(request):
             order.save() # pk is created after saveing , so we should use it after save
             order.order_number = generate_order_numebr(order.id)
             order.save()
-            return redirect('place_order')
+            context = {
+                'order': order,
+                'cart_items':cart_items,
+            }
+            return render(request, 'orders/place_order.html', context=context)
         else:
             print(form.errors)   
     return render(request, 'orders/place_order.html')
 
 
 def payments(request):
+    
     return HttpResponse('Payments view')
