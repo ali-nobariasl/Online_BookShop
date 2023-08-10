@@ -56,5 +56,12 @@ def place_order(request):
 
 
 def payments(request):
-    
+    # if the request is AJAX request or not
+    # store the payment details in the payment model
+    # update the order model
+    # move the cart items to order food
+    # send order confirmation email to customer
+    # send order received email to the vendor 
+    #clear the cart if the payment is success
+    # return back tp ajax with the satatus success oe failere
     return HttpResponse('Payments view')
