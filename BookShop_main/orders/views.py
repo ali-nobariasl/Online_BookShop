@@ -97,4 +97,18 @@ def payments(request):
             'to_email':order.email,
         }
         send_notification(mail_subject, mail_template, context)
+        
+        #
+        mail_subject = 'You have new order'
+        mail_template = 'orders/new_order_received.html'
+        to_emails =[]
+        for i in cart_items:
+            if i.bookitem.vendor.user.email not in to_emails:
+                to_emails.append(i.bookitem.vendor.user.email)
+        context = {
+            'user': request.user,
+            'order': order,
+            'to_email':to_emails,
+        }
+        send_notification(mail_subject, mail_template, context)
     return HttpResponse('Payments view')
