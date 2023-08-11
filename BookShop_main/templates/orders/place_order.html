@@ -124,7 +124,7 @@
         return cookieValue;
     }
 
-   
+    var order_complete = "{% url 'order_complete' %}"
     var grand_total = "{{ grand_total }}"
     var url = "{% url 'payments' %}"
     var order_number = "{{ order.order_number }}"
@@ -148,7 +148,7 @@
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(orderData){
                 console.log(orderData)
-                var transaction = orderData.purchase[0].payments.captures[0];
+                var transaction = orderData.purchase_units[0].payments.captures[0];
                 
                 var transaction_id = transaction.id
                 var status = orderData.status

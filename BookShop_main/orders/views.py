@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect, HttpResponse
-from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render, redirect
+from django.http import HttpRequest, HttpResponse, JsonResponse
 import simplejson as json
 from django.contrib.auth.decorators import login_required
 
-from .models import Order, Payment
+from .models import Order, Payment, OrderedBook
 from .forms import OrderForm
 from .utils import generate_order_numebr
 from marketplace.models import Cart
@@ -82,12 +82,25 @@ def payments(request):
             amount = order.total,
         )
         payment.save()
+        
         #
         order.payment = payment
         order.is_ordered = True
         order.save()
-        #
         
+        #
+        cart_items = Cart.objects.filter(user=request.user)
+        for item in cart_items:
+            ordered_book = OrderedBook()
+            ordered_book.order = order
+            ordered_book.payment = payment
+            ordered_book.user = request.user
+            ordered_book.Bookitem = item.bookitem
+            ordered_book.quantity = item.quantity
+            ordered_book.price = item.bookitem.price
+            ordered_book.amount = item.bookitem.price * item.quantity
+            ordered_book.save()
+            
         # email to customer
         mail_subject = 'thanks for your order from our website'
         mail_template = 'orders/order_confirmation_email.html'
@@ -111,4 +124,30 @@ def payments(request):
             'to_email':to_emails,
         }
         send_notification(mail_subject, mail_template, context)
+        
+        # clear the cart
+        #cart_items.delete()
+        
+        # return back to ajax
+        response = {
+            'order_number': order_number,
+            'transaction_id': transaction_id,
+        }
+        print('......')
+        print(response)
+        return JsonResponse(response)
     return HttpResponse('Payments view')
+
+
+
+def order_complete(request):
+    order_number= request.GET.get('order_no')
+    transaction_id= request.GET.get('trans_id')
+    
+    try:
+        order = Order.objects.get(order_number=order_number,payment_transaction=transaction_id, is_ordered= True)
+    except:
+        return redirect('home')
+    
+    context ={}
+    return render(request, 'orders/order_complete.html', context=context)
