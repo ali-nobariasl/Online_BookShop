@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container mt-5 mb-5">
+    <div class="justify-content-center row">
+        <div class="col-md-8">
+            <div class="bg-white p-3">
+                <img src="{% static 'logo/booklogo.jpg' %}" alt="Book Online Logo" width="300">
+                <h4 class="mt-2 mb-3">Thank you for your order.</h4>
+                <h6>Hello {{order.name}},</h6><span> Review your order info.</span> 
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <div class="">
+                        <span class="d-block">Order Date:</span><span> {{order.created_at}}</span>
+                    </div>
+                    <div class="">
+                        <span class="d-block">Order Number:</span><span> {{order.order_number}}</span>
+                    </div>
+                    <div class="">
+                        <span class="d-block">Payment Method:</span><span> {{order.payment_method}}</span>
+                    </div>
+                    <div class="">
+                        <span class="d-block">Transaction ID:</span><span> {{order.payment.transaction_id}}</span>
+                    </div>
+                    <hr>
+                    <table class="table">
+                        <tbody>
+                            {% for item in orderedbook %}
+                            <tr>
+                                <td><img src="{{item.bookitem.image.url }}" width="40" alt="Book Image"> </td>
+                                <td>
+                                    <p class="mb-0"><b> {{item.bookitem}} </b></p>
+                                    <a class="text-muted" href="{% url 'vendor_detail' item.bookitem.vendor.vendor_slug %}">{{item.bookitem.vendor.vendor_name}}</a>
+                                </td>
+                                <td> {{item.quantity }} QTY</td>
+                                <td>${{item.bookitem.price}} </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="row mt-5">
+                        <div class="d-flex justify-content-center col-md-6">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

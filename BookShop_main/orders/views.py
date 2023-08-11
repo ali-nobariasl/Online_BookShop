@@ -154,6 +154,6 @@ def order_complete(request):
         return render(request, 'orders/order_complete.html', context=context)
         
     except:
-        return redirect('home')
+        return redirect('index')
     
     
