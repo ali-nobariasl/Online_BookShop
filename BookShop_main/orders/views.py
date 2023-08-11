@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import HttpRequest, HttpResponse
 import simplejson as json
+from django.contrib.auth.decorators import login_required
 
 from .models import Order, Payment
 from .forms import OrderForm
@@ -9,10 +10,9 @@ from marketplace.models import Cart
 from marketplace.context_processors import get_cart_amounts
 from accounts.utils import send_notification
 
-
+@login_required(login_url='login')
 def place_order(request):
-    
-    
+
     cart_items = Cart.objects.filter(user=request.user).order_by('created_at')
     cart_count = cart_items.count()
     if cart_count <= 0:
@@ -55,6 +55,8 @@ def place_order(request):
     return render(request, 'orders/place_order.html')
 
 
+
+@login_required(login_url='login')
 def payments(request):
     # if the request is AJAX request or not
     # store the payment details in the payment model
