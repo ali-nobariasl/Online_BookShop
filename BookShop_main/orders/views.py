@@ -143,8 +143,8 @@ def order_complete(request):
     transaction_id= request.GET.get('trans_id')
 
     try:
-        order = Order.objects.get(order_number=order_number ,payment__transaction_id=transaction_id)
-        ordered_book = OrderedBook.objects.get(order=order)
+        order = Order.objects.get(order_number=order_number ,payment__transaction_id=transaction_id, is_ordered=True)
+        ordered_book = OrderedBook.objects.filter(order=order)
         subtotal = 0
         
         for item in ordered_book:
@@ -161,5 +161,3 @@ def order_complete(request):
         
     except:
         return redirect('index')
-    
-    

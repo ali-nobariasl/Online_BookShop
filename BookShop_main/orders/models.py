@@ -69,4 +69,4 @@ class OrderedBook(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.Bookitem.Book_title
+        return self.Bookitem.book_title
