@@ -146,8 +146,14 @@ def order_complete(request):
     
     try:
         order = Order.objects.get(order_number=order_number,payment_transaction=transaction_id, is_ordered= True)
+        ordered_book = OrderedBook.objects.get(order=order)
+        context ={
+            'order':order,
+            'ordered_book':ordered_book,
+        }
+        return render(request, 'orders/order_complete.html', context=context)
+        
     except:
         return redirect('home')
     
-    context ={}
-    return render(request, 'orders/order_complete.html', context=context)
+    
