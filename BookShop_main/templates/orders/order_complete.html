@@ -7,7 +7,7 @@
     <div class="justify-content-center row">
         <div class="col-md-8">
             <div class="bg-white p-3">
-                <img src="{% static 'logo/booklogo.jpg' %}" alt="Book Online Logo" width="100">
+                <img src="{% static 'logo/booklogo.jpg' %}" alt="Book Online Logo" width="300">
                 <div class="row">
                     <div class="col-md-6">
                         <h4 class="mt-2 mb-3">Thank you for your order.</h4>
@@ -34,24 +34,26 @@
                     <div class="">
                         <span class="d-block">Transaction ID:</span><span> {{order.payment.transaction_id}}</span>
                     </div>
-                    <hr>
-                    <table class="table">
-                        <tbody>
-                            {% for item in orderedbook %}
+                </div>
+                <hr>
+                <table class="table">
+                    <tbody>
+                        {% for item in ordered_book %}
                             <tr>
-                                <td><img src="{{item.bookitem.image.url }}" width="40" alt="Book Image"> </td>
+                                <td><img src="{{item.Bookitem.image.url }}" width="60" alt="Book Image"> </td>
                                 <td>
-                                    <p class="mb-0"><b> {{item.bookitem}} </b></p>
-                                    <a class="text-muted" href="{% url 'vendor_detail' item.bookitem.vendor.vendor_slug %}">{{item.bookitem.vendor.vendor_name}}</a>
+                                    <p class="mb-0"><b> {{item.Bookitem}} </b></p>
+                                    <a class="text-muted" href="#">{{item.Bookitem.vendor.vendor_name}}</a>
                                 </td>
                                 <td> {{item.quantity }} QTY</td>
-                                <td>${{item.bookitem.price}} </td>
+                                <td>${{item.Bookitem.price}} </td>
                             </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                        {% endfor %}
+                    </tbody>
+                </table>
 
-                    <div class="row mt-5">
+                
+                <div class="row mt-5">
                         <div class="d-flex justify-content-center col-md-6">
                             <img src="{% static 'images/paid.png' %}" width="200">
                         </div>
@@ -86,9 +88,11 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between ">
+                </div>
+                <hr>
+
+                <div class="d-flex justify-content-between ">
+                    <div>
                         <span class="d-block font-weight-bold">Thanks for Choosing US.</span>
                         <span > Book Online Team(Ali N) </span>
                     </div>
@@ -97,6 +101,7 @@
                         <span > Contact us </span>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
