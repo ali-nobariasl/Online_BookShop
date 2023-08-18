@@ -158,4 +158,8 @@ def order_complete(request):
             'tax_data':tax_data,
         }
     return render(request, 'orders/order_complete.html', context=context)
+
+
+def ali(request):
+    return HttpResponse("I am ali")
         
