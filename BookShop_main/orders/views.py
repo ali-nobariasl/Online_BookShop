@@ -161,5 +161,8 @@ def order_complete(request):
 
 
 def ali(request):
+    
+    
+    context = {}
     return HttpResponse("I am ali")
         
