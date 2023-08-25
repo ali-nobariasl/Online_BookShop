@@ -162,7 +162,10 @@ def order_complete(request):
 
 def ali(request):
     
-    
+    if request.method == 'POST':
+        pass
+    else:
+        return False
     context = {}
     return HttpResponse("I am ali")
         
