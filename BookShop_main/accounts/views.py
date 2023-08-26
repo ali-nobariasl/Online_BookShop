@@ -175,10 +175,14 @@ def custDashboard(request):
     return render(request, 'accounts/custDashboard.html',context=context)
 
 
+
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 def vendorDashboard(request):
-
+    
+    vendor = Vendor.objects.get(user=request.user)
+    order = Order.objects.filter(vendors=vendor, is_ordered=True).order_by('-created_at')
+    print("orders are ---->",order)
     return render(request, 'accounts/vendorDashboard.html')
 
 

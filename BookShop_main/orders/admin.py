@@ -8,7 +8,7 @@ class OrderedBookInline(admin.TabularInline):
     extra = 0
     
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['order_number','name','phone','email','total','payment_method','status','is_ordered']
+    list_display = ['order_number','name','order_placed_to','phone','email','total','payment_method','status','is_ordered']
     inlines = [OrderedBookInline]
 
 
