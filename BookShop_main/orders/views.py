@@ -18,6 +18,11 @@ def place_order(request):
     if cart_count <= 0:
         return redirect('marketplace')
     
+    vendors_ids = []
+    for i in cart_items:
+        if i.bookitem.vendor.id not in vendors_ids:
+            vendors_ids.append(i.bookitem.vendor.id)
+    
     subtotal = get_cart_amounts(request)['subtotal']
     total_tax = get_cart_amounts(request)['tax']
     grand_total = get_cart_amounts(request)['grand_total']
@@ -44,6 +49,7 @@ def place_order(request):
             
             order.save() # pk is created after saveing , so we should use it after save
             order.order_number = generate_order_numebr(order.id)
+            order.vendors.add(*vendors_ids)
             order.save()
             context = {
                 'order': order,

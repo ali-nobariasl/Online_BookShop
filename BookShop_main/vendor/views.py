@@ -16,6 +16,8 @@ from accounts.forms import UserProfileForm
 from stok.models import Category , BookItem
 from stok.forms import CategoryForm , BookItemForm
 
+from orders.models import Order, OrderedBook
+
 def get_vendor(request):
     vendor = Vendor.objects.get(user= request.user)
     return vendor
@@ -252,3 +254,19 @@ def remove_opening_hours(request, pk=None):
             hour.delete()
             response = {'status':'success', 'id':pk}
             return JsonResponse(response)
+        
+        
+
+def order_detail(request,order_number=None):
+    
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered=True)
+        ordered_book = OrderedBook.objects.get(order=order)
+        print(ordered_book)
+    except:
+        return redirect('vendor')
+    context = {
+        'order':order,
+        'ordered_book':ordered_book
+    }
+    return render(request,'vendor/order_detail.html',context=context)
