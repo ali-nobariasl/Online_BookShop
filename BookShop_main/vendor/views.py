@@ -267,6 +267,7 @@ def order_detail(request,order_number=None):
         return redirect('vendor')
     context = {
         'order':order,
-        'ordered_book':ordered_book
+        'ordered_book':ordered_book,
+        'ali':'ali',
     }
     return render(request,'vendor/order_detail.html',context=context)
