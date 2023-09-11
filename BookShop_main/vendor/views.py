@@ -261,13 +261,14 @@ def order_detail(request,order_number=None):
     
     try:
         order = Order.objects.get(order_number=order_number, is_ordered=True)
-        ordered_book = OrderedBook.objects.get(order=order)
+        ordered_book = OrderedBook.objects.filter(order=order, Bookitem__vendor=get_vendor(request))
+        print('........')
         print(ordered_book)
+        
     except:
         return redirect('vendor')
     context = {
         'order':order,
         'ordered_book':ordered_book,
-        'ali':'ali',
     }
     return render(request,'vendor/order_detail.html',context=context)

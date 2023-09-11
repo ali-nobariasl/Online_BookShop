@@ -3,6 +3,9 @@ from accounts.models import User
 from stok.models import BookItem
 from vendor.models import Vendor
 
+
+request_object = ''
+
 class Payment(models.Model):
     PAYMENT_METHOD = (
         ('PayPal', 'PayPal'),
@@ -62,6 +65,9 @@ class Order(models.Model):
     def __str__(self):
         return self.order_number
 
+    def get_total_by_vendor(self):
+        vendor = Vendor.objects.get(user= request_object.user)
+        return vendor
 
 class OrderedBook(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
