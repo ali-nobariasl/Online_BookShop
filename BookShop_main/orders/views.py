@@ -6,9 +6,11 @@ from django.contrib.auth.decorators import login_required
 from .models import Order, Payment, OrderedBook
 from .forms import OrderForm
 from .utils import generate_order_numebr
-from marketplace.models import Cart
+from marketplace.models import Cart, Tax
 from marketplace.context_processors import get_cart_amounts
 from accounts.utils import send_notification
+from stok.models import BookItem
+
 
 @login_required(login_url='login')
 def place_order(request):
@@ -22,6 +24,36 @@ def place_order(request):
     for i in cart_items:
         if i.bookitem.vendor.id not in vendors_ids:
             vendors_ids.append(i.bookitem.vendor.id)
+    
+    subtotal = 0
+    k = {}
+    total_data ={}
+    for i in cart_items:
+        bookitem = BookItem.objects.get(pk= i.bookitem.id, vendor_id__in=vendors_ids)
+        v_id = bookitem.vendor.id
+        if v_id in k:
+            subtotal = k[v_id]
+            subtotal += (bookitem.price * i.quantity)
+            k[v_id]= subtotal
+        else:
+            subtotal = (bookitem.price * i.quantity)
+            k[v_id]= subtotal
+
+        #calculate tax data
+        
+        get_tax = Tax.objects.filter(is_active=True)
+        tax_dic ={}
+        for i in get_tax:
+            tax_type = i.tax_type
+            tax_percentage = i.tax_percentage
+            tax_amount = round((tax_percentage*subtotal)/100,2)
+            tax_dic.update({tax_type:{str(tax_percentage):str(tax_amount)}})
+        # construct totsl data
+        total_data.update({bookitem.vendor.id:{str(subtotal):str(tax_dic)}})
+            
+        print('--------------------------------------------------------')
+        print(bookitem, bookitem.vendor.id)
+        print(total_data)
     
     subtotal = get_cart_amounts(request)['subtotal']
     total_tax = get_cart_amounts(request)['tax']
