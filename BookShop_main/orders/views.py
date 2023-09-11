@@ -50,10 +50,7 @@ def place_order(request):
             tax_dic.update({tax_type:{str(tax_percentage):str(tax_amount)}})
         # construct totsl data
         total_data.update({bookitem.vendor.id:{str(subtotal):str(tax_dic)}})
-            
-        print('--------------------------------------------------------')
-        print(bookitem, bookitem.vendor.id)
-        print(total_data)
+
     
     subtotal = get_cart_amounts(request)['subtotal']
     total_tax = get_cart_amounts(request)['tax']
@@ -77,6 +74,7 @@ def place_order(request):
             order.total = grand_total
             order.tax_data = json.dumps(tax_data)
             order.total_tax = total_tax
+            order.total_data = json.dumps(total_data)
             order.payment_method = request.POST['payment_method']
             
             order.save() # pk is created after saveing , so we should use it after save
@@ -198,12 +196,4 @@ def order_complete(request):
     return render(request, 'orders/order_complete.html', context=context)
 
 
-def ali(request):
-    
-    if request.method == 'POST':
-        pass
-    else:
-        return False
-    context = {}
-    return HttpResponse("I am ali")
         
