@@ -1,3 +1,5 @@
+import json
+
 from django.db import models
 from accounts.models import User
 from stok.models import BookItem
@@ -67,7 +69,40 @@ class Order(models.Model):
 
     def get_total_by_vendor(self):
         vendor = Vendor.objects.get(user= request_object.user)
-        return vendor
+        subtotal = 0
+        tax = 0
+        tax_dict = {}
+        if self.total_data:
+            total_data = json.loads(self.total_data)
+            data = total_data.get(str(vendor.id))
+            
+            
+            
+            for key, val in data.items():
+                subtotal += float(key)
+                val = val.replace("'",'"')
+                val = json.loads(val)
+                tax_dict.update(val)
+                
+                #calculate tax
+                for i in val:
+                    for j in val[i]:
+                        tax += float(val[i][j])
+                        print(val[i][j])
+                print('####')
+                print(tax_dict)
+                
+        grand_total = float(subtotal)+ float(tax)
+        print('####')
+        print('grand total', grand_total)
+        print(subtotal)
+        print(tax)
+        context = {
+            'subtotal': subtotal,
+            'grand_total': grand_total,
+            'tax_dict': tax_dict,
+        }
+        return context
 
 class OrderedBook(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
