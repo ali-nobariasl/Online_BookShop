@@ -43,7 +43,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'orders.request_object.RequestObjectMiddleware',# custom middleware to access request object
+    'orders.request_object.RequestObjectMiddleware',               # custom middleware to access request object
 ]
 
 ROOT_URLCONF = 'BookShop_main.urls'
